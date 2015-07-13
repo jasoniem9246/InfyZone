@@ -15,16 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import model.DemoProductInfo;
 
 /**
- * Servlet implementation class GetProductByProductName
+ * Servlet implementation class GetProductByCategoryId
  */
-@WebServlet("/GetProductByProductName")
-public class GetProductByProductName extends HttpServlet {
+@WebServlet("/GetProductByCategoryName")
+public class GetProductByCategoryName extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetProductByProductName() {
+    public GetProductByCategoryName() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,8 +44,8 @@ public class GetProductByProductName extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String tableInfo = "";
-		String productName = request.getParameter("productName");
-		List<DemoProductInfo> productInfo = displayAllProductInfo(productName);
+		String categoryName = request.getParameter("category");
+		List<DemoProductInfo> productInfo = displayAllProductInfo(categoryName);
 				
 		try
 		{
@@ -55,6 +55,8 @@ public class GetProductByProductName extends HttpServlet {
 			{
 				
 				tableInfo += "<tr><td>" + productInfo.get(i).getProductName()
+						+ "</th><th>" + "<a href='displayProductDetail?productId="
+						+ productInfo.get(i).getProductName() + "'>"
 						+ "</th><th>" + productInfo.get(i).getProductDescription()
 						+ "</th><th>" + productInfo.get(i).getListPrice()
 						+ "</td></tr>";
@@ -64,7 +66,7 @@ public class GetProductByProductName extends HttpServlet {
 		}
 		catch(Exception e)
 		{
-			request.setAttribute("message", "<div class='alert alert-danger' role='alert'>Error Happens for GetProductByProductName servlet! " + e + "</div>");
+			request.setAttribute("message", "<div class='alert alert-danger' role='alert'>Error Happens for GetProductByCategoryName servlet! " + e + "</div>");
 		}
 		
 		getServletContext()
@@ -73,13 +75,13 @@ public class GetProductByProductName extends HttpServlet {
 		
 	}
 	
-	protected static List<DemoProductInfo> displayAllProductInfo(String productName)
+	protected static List<DemoProductInfo> displayAllProductInfo(String categoryName)
 	{
 		
 		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
-		String qString = "SELECT d FROM DemoProductInfo d where d.productName = :productName";
+		String qString = "SELECT d FROM DemoProductInfo d where d.category = :category";
 		TypedQuery<DemoProductInfo> q = em.createQuery(qString, DemoProductInfo.class);
-		q.setParameter("productName", (productName));
+		q.setParameter("category", (categoryName));
 		List<DemoProductInfo> i = null;
 		try
 		{
@@ -102,7 +104,6 @@ public class GetProductByProductName extends HttpServlet {
 		
 		return i;
 
-		
 	}
 
 }
