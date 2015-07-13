@@ -49,29 +49,32 @@ public class ShowOrderHistory extends HttpServlet {
 		
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		em.find(DemoUser.class,1l );
-		DemoUser  dbuser = em.find(DemoUser.class,1l );
+		DemoUser  dbuser = em.find(DemoUser.class,1l);
 		
          HttpSession session = request.getSession();
          session.setAttribute("user", dbuser);
 		 model.DemoUser user = (DemoUser) session.getAttribute("user");
-		 
-		 System.out.println("User:" + user);
+		 System.out.println("User:" + user.getUserId());
+
 		 if(user == null) {
-			 response.sendRedirect("index.jsp");
+			 response.sendRedirect("/index.jsp");
 		} else {
-			String adminuser = user.getAdminUser();
+			Long adminuser = user.getUserId();
 			
 
-			if (adminuser.equals("Y")) {
-				List<model.DemoOrder> orders = em.createQuery(
+			if (adminuser.equals(1l)) {
+				@SuppressWarnings("unchecked")
+				List<DemoOrder> orders = em.createQuery(
 						"SELECT d FROM DemoOrder d").getResultList();
 				request.setAttribute("orders", orders);
 				request.getRequestDispatcher("/order_history.jsp").forward(
 						request, response);
-			} else if (adminuser.equals("N")) {
-				List<model.DemoOrder> orders = (List<DemoOrder>) em.createQuery(
-						"SELECT d FROM DemoOrder d WHERE d.orderid")
-						.getSingleResult();
+			} else if (adminuser.equals(2l)) {
+								long id = user.getUserId();
+				@SuppressWarnings("unchecked")
+				List<DemoOrder> orders = (List<DemoOrder>) em.createQuery(
+						"SELECT d FROM DemoOrder d WHERE d.demoUser.userId = :userId").setParameter("userId", id)
+						.getResultList();
 				request.setAttribute("orders", orders);
 				request.getRequestDispatcher("/order_history.jsp").forward(
 						request, response);
