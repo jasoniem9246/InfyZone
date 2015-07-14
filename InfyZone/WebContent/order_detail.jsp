@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@include file="header.jsp"%>
 
       
@@ -26,31 +26,31 @@
                     <table class="table table-striped">
                       <thead>
                         <tr>
-                          <th>#</th>
-                          <th>Name</th>
-                          <th>Image</th>
+                        
+                          <th>Order Item Id</th>
+                          <th>Order Id</th>
+                          <th>Product Id</th>
+                          <th>Price</th>
                           <th>Quantity</th>
-                          <th>Unit Price</th>
-                          <th>Total</th>
                         </tr>
                       </thead>
                       <tbody>
+                         <c:forEach items="${items}" var="item">
                         <tr>
                           <!-- Index -->
-                          <td>1</td>
+                          <td>${item.orderItemId}</td>
                           <!-- Product  name -->
-                          <td><a href="single-item.html">HTC One</a></td>
-                          <!-- Product image -->
-                          <td><a href="single-item.html"><img src="img/items/2.png" alt="" class="img-responsive"/></a></td>
+                          <td>${item.orderId}</td>
+                          <!-- Product image<a href="single-item.html"><img src="img/items/2.png" alt="" class="img-responsive"/></a> -->
+                          <td>${item.demoProductInfo}</td>
                           <!-- Quantity with refresh and remove button -->
-                          <td>                     
-                          </td>
+                          <td>${item.unitPrice } </td>
                           <!-- Unit price -->
-                          <td>$150</td>
-                          <!-- Total cost -->
-                          <td>$300</td>
+                          <td>${item.quantity}</td>
+                          <!-- Total cost  <td>$300</td> -->
+                         
                         </tr>
-                        
+                        </c:forEach>
                       </tbody>
                     </table>
                                      

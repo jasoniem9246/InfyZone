@@ -35,7 +35,7 @@ public class DemoOrder implements Serializable {
 	private DemoCustomer demoCustomer;
 
 	//bi-directional many-to-one association to DemoUser
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="USER_ID")
 	private DemoUser demoUser;
 
