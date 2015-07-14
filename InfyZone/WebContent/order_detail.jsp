@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+     
 <%@include file="header.jsp"%>
 
       
@@ -35,16 +37,19 @@
                         </tr>
                       </thead>
                       <tbody>
-                         <c:forEach items="${items}" var="item">
+                         <c:forEach items="${order.demoOrderItems}" var="item">
                         <tr>
                           <!-- Index -->
                           <td>${item.orderItemId}</td>
                           <!-- Product  name -->
-                          <td>${item.orderId}</td>
+                          <td>${order.orderId}</td>
                           <!-- Product image<a href="single-item.html"><img src="img/items/2.png" alt="" class="img-responsive"/></a> -->
-                          <td>${item.demoProductInfo}</td>
+                          <td>${item.demoProductInfo.productId}</td>
                           <!-- Quantity with refresh and remove button -->
-                          <td>${item.unitPrice } </td>
+                          
+                           <td><fmt:setLocale value="en_US"/>
+                           <fmt:formatNumber value= "${item.unitPrice }" type="currency"/>
+                          </td>
                           <!-- Unit price -->
                           <td>${item.quantity}</td>
                           <!-- Total cost  <td>$300</td> -->
@@ -60,7 +65,7 @@
                     <div class="row">
                       <div class="span4 offset8">
                         <div class="pull-right">
-                          <a href="#" class="btn btn-info">Back to Order History</a>
+                          <a href="ShowOrderHistory" class="btn btn-info">Back to Order History</a>
                         </div>
                       </div>
                     </div>

@@ -52,12 +52,7 @@
 					<td>${order.demoCustomer.customerId}</td>
 					<td>${order.orderTotal}</td>
 					<td>${order.orderTimestamp}</td>
-					<td>${order.demoUser.userId}</td>
-                    <!--  <td>14-08-12</td>
-                        <td>1523</td>
-                        <td>Galaxy SIII</td>
-                        <td>$430</td>
-                        <td>Completed</td>-->    
+					<td>${order.demoUser.userId}</td>    
                      </tr>  
 					</c:forEach>
                   </table>
