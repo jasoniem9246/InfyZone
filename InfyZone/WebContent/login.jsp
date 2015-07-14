@@ -21,7 +21,7 @@
                         <div class="cool-block-bor">
                         
                            <h3>Login</h3>
-                           <form class="form-horizontal" role="form" method="get" action="Login">
+                           <form class="form-horizontal" role="form" method="get" action="MainController">
                              <div class="form-group">
                                <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
                                <div class="col-lg-10">
@@ -45,7 +45,7 @@
                              </div>
                              <div class="form-group">
                                <div class="col-lg-offset-2 col-lg-10">
-                                 <button type="submit" class="btn btn-info">Sign in</button>
+                                 <button type="submit" class="btn btn-info" name="action" value="login">Sign in</button>
                                  <button type="reset" class="btn btn-default">Reset</button>
                                </div>
                              </div>
