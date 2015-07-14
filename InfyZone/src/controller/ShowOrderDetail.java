@@ -45,12 +45,12 @@ public class ShowOrderDetail extends HttpServlet {
 		
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		
-	       String id = request.getParameter("orderId"); 
+	    long id = Long.parseLong(request.getParameter("orderId")); 
 	
 			
 			
-		List<DemoOrderItem> items = (List<DemoOrderItem>) em.createQuery("SELECT d FROM DemoOrderItem where d.orderId=:orderId").setParameter("orderId", id).getSingleResult();
-		request.setAttribute("items", items);
+		DemoOrder order = (DemoOrder) em.createQuery("SELECT d FROM DemoOrder d where d.orderId=:orderId").setParameter("orderId", id).getSingleResult();
+		request.setAttribute("order", order);
 		request.getRequestDispatcher("/order_detail.jsp").forward(
 				request, response);
 				
