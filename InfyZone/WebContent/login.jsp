@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
+    
 <%@include file="header.jsp"%>
+
+<script>
+	window.onload = function() {
+		document.getElementById("previousURL").value = document.referrer;
+	}
+</script>
 
     <!-- Page content -->
       
@@ -43,6 +50,7 @@
                                  </div>
                                </div>
                              </div>
+                             <input type="hidden" id="previousURL" name="previousURL" />
                              <div class="form-group">
                                <div class="col-lg-offset-2 col-lg-10">
                                  <button type="submit" class="btn btn-info" name="action" value="login">Sign in</button>

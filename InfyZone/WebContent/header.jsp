@@ -128,8 +128,8 @@
                
                <div class="col-md-3 col-sm-3">
                   <div class="kart-links">
-                     <a href="login.html">Login</a> 
-                     <a href="register.html">Signup</a>
+                     <a href="login.jsp">Login</a> 
+                     <a href="register.jsp">Signup</a>
                      <a data-toggle="modal" href="#shoppingcart"><i class="fa fa-shopping-cart"></i> 
                      <c:if test="${!empty order.demoOrderItems}">
                      	${fn:length(order.demoOrderItems)} - ${order.orderTotal}

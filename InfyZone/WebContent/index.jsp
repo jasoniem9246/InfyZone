@@ -11,7 +11,7 @@
 				<div class="row">
 				   <div class="col-md-12">
 					  <!-- Catchy title -->
-					  <h3>Welcome to <span class="color">InfoZone</span> online shopping website</h3>
+					  <h3>Welcome to <span class="color">InfyZone</span> online shopping website</h3>
 					  <p>An exciting place for the whole family to shop.</p>
 				   </div>
 				</div>
@@ -40,7 +40,7 @@
                 <!-- Item details -->
                 <div class="item-details">
                   <!-- Name -->
-                  <h5><a href="single-item.html">${product.productName}</a></h5>
+                  <h5><a href="ProductDetail?productID=${product.productID}">${product.productName}</a></h5>
                   <div class="clearfix"></div>
                   <!-- Para. Note more than 2 lines. -->
                   <p>${fn:substring(product.productDescription, 0, 20)}...</p>
