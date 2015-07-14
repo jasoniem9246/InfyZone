@@ -98,7 +98,7 @@
 							<c:if test="${!empty user}">
 								<li><a href="#" rel="ddsubmenu1">Account</a>
 									<ul id="ddsubmenu1" class="ddsubmenustyle">
-										<li><a href="ShowCart">View Cart</a></li>
+										<li><a href="ViewCart">View Cart</a></li>
 										<li><a href="ShowOrderHistory">Order History</a></li>
 										<li><a href="#">Edit Profile</a></li>
 									</ul>
@@ -112,14 +112,14 @@
 					<div class="navis"></div>                
 				</div>
 				<div class="col-md-4 col-sm-4" style="margin-top:20px;">
-				<form class="form">
-						<select name="category" style="height: 30px">
+				<form class="form-inline">
+						<select name="category" style="height: 31px">
 							<option value="volvo">Volvo</option>
 							<option value="saab">Saab</option>
 							<option value="fiat">Fiat</option>
 							<option value="audi">Audi</option>
 						</select>
-						<input   placeholder="Search..." name="search"/>
+						<input   class="form-control" style="width:150px;" placeholder="Search..." name="search"/>
 						<button type="submit" name="action" value="search" class="btn btn-default">						
 						<span class="glyphicon glyphicon-star" aria-hidden="true">Go</span>
 						</button>
