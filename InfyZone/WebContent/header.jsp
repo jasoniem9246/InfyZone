@@ -55,13 +55,15 @@
                 </tr>
             </thead>
             <tbody>
-<%-- 			<c:forEach items="order.demoOrderItems" var="orderItem">
+<%--             <c:if test="${!empty user}">
+			<c:forEach items="order.demoOrderItems" var="orderItem">
 				<tr>
                   <td><a href="ProductDetail?productID=${orderItem.demoProductInfo.productId}">${orderItem.demoProductInfo.productName}</a></td>
                   <td>${orderItem.quantity}</td>
                   <td>${orderItem.unitPrice}</td>
                 </tr>
-			</c:forEach> --%>
+			</c:forEach>
+			</c:if> --%>
 			</tbody>
             </table>
            </div>
@@ -114,11 +116,10 @@
 				<div class="col-md-4 col-sm-4" style="margin-top:20px;">
 				<form class="form-inline">
 						<select name="category" style="height: 31px">
-							<option value="volvo">Volvo</option>
-							<option value="saab">Saab</option>
-							<option value="fiat">Fiat</option>
-							<option value="audi">Audi</option>
-						</select>
+							<c:forEach items="${categories}" var="category">
+								<option value="${category}">${category}</option>
+							</c:forEach>
+						</select> 
 						<input   class="form-control" style="width:150px;" placeholder="Search..." name="search"/>
 						<button type="submit" name="action" value="search" class="btn btn-default">						
 						<span class="glyphicon glyphicon-star" aria-hidden="true">Go</span>
