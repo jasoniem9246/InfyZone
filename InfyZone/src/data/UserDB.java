@@ -71,4 +71,36 @@ public class UserDB {
 		}
 	
 	}
+	
+	
+	public static  DemoUser GetUserByEmailAndPassword(String oldUserEmail, String oldUserPassword)
+	{
+		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
+		String qString = "Select u from DemoUser u where u.userEmail = :oldUserEmail and u.password = :oldUserPassword";
+		TypedQuery<DemoUser> q = em.createQuery(qString, DemoUser.class);
+		q.setParameter("oldUserEmail", oldUserEmail);
+		q.setParameter("oldUserPassword", oldUserPassword);
+		DemoUser i = null;
+		
+		try
+		{
+			i = q.getSingleResult();
+			if(i == null)
+			{
+				i = null;
+			}
+		}
+		catch(NoResultException e)
+		{
+			System.out.println(e);
+		}
+		
+		finally
+		{
+			em.close();
+		}
+		return i;
+	
+	}
+	
 }
