@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="header.jsp"%>
 
       
@@ -35,32 +36,54 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <!-- Index -->
-                          <td>1</td>
-                          <!-- Product  name -->
-                          <td><a href="single-item.html">HTC One</a></td>
-                          <!-- Product image -->
-                          <td><a href="single-item.html"><img src="img/items/2.png" alt="" class="img-responsive"/></a></td>
-                          <!-- Quantity with refresh and remove button -->
-                          <td>
-                            <div class="input-group">
-                            <form action="" action="post" style="width:120px;">
-                              <input type="text" class="form-control" placeholder="1" style="width:60px;">
-                              <span class="input-group-btn" style="float:right;">
-                                <button class="btn btn-info" type="submit" name="update"><i class="fa fa-refresh"></i></button>
-                                <button class="btn btn-danger" type="submit" name="delete"><i class="fa fa-times"></i></button>
-                              </span>
-                            </form>
-                            </div>
-                          </td>
-                          <!-- Unit price -->
-                          <td>$150</td>
-                          <!-- Total cost -->
-                          <td>$300</td>
-                        </tr>
-                        
-                      </tbody>
+						<c:choose>
+							<c:when test="${!empty order}">
+								<c:forEach items="${order.demoOrderItems}" var="item">
+									<tr>
+										<!-- Index -->
+										<td>1</td>
+										<!-- Product  name -->
+										<td><a
+											href="GetProductByProductID?productId=${item.demoProductInfo.productId}">${item.demoProductInfo.productName}</a></td>
+										<!-- Product image -->
+										<td><a
+											href="GetProductByProductID?productId=${item.demoProductInfo.productId}">
+												<img src="${item.demoProductInfo.productimageurl}" alt=""
+												class="img-responsive" />
+										</a></td>
+										<!-- Quantity with refresh and remove button -->
+										<td>
+											<div class="input-group">
+												<form action="CartServlet" method="post" style="width: 120px;">
+													<input type="text" class="form-control" name="quantity" value="${item.quantity}"
+														style="width: 60px;"> <span
+														class="input-group-btn" style="float: right;">
+														<button class="btn btn-info" type="submit" name="update">
+															<i class="fa fa-refresh"></i>
+														</button>
+														<button class="btn btn-danger" type="submit" name="delete">
+															<i class="fa fa-times"></i>
+														</button>
+													</span>
+												</form>
+											</div>
+										</td>
+										<!-- Unit price -->
+										<td><fmt:formatNumber value="${item.unitPrice}"
+												type="currency" /></td>
+										<!-- Total cost -->
+										<td><fmt:formatNumber
+												value="${item.unitPrice * item.quantity}" type="currency" /></td>
+									</tr>
+
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<h3>Cart is empty</h3>
+							</c:otherwise>
+						</c:choose>
+
+					</tbody>
                     </table>
                                      
                       <hr />

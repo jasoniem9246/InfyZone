@@ -49,7 +49,7 @@ public class DemoOrder implements Serializable {
 
 	//bi-directional many-to-one association to DemoOrderItem
 	@OneToMany(mappedBy="demoOrder")
-	private List<DemoOrderItem> demoOrderItems = new LinkedList();
+	private List<DemoOrderItem> demoOrderItems = new LinkedList<DemoOrderItem>();
 
 	public DemoOrder() {
 	}

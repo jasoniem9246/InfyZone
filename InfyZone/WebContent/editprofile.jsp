@@ -15,13 +15,13 @@
 		geocoder = new google.maps.Geocoder();
 		console.log("Adding input listener to all input fields");
 		// add an input listener to all input fields
-		var listOfInputsInForm = document.querySelectorAll("input");
+		/* var listOfInputsInForm = document.querySelectorAll("input");
 		for (var i = 0; i < listOfInputsInForm.length; i++) {
 			addInputListener(listOfInputsInForm[i]);
 		}
 
 		// restore form content with previously saved values
-		restoreFormContent();
+		restoreFormContent(); */
 	}
 
 	function addInputListener(inputField) {
@@ -43,7 +43,7 @@
 		//      storage
 		//    - If the value is not undefined, restore the value
 		//      of the input field
-		for (var i = 0; i < listOfInputsInForm.length; i++) {
+		for (var i = 0; i < listOfInputsInForm.length - 4; i++) {
 			var fieldToRestore = listOfInputsInForm[i];
 			var id = fieldToRestore.id;
 			var savedValue = localStorage.getItem(id);
@@ -227,19 +227,19 @@
                     <div class="form-group">
                       <label for="userName" class="col-md-2 control-label">Username</label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" id="userName" name="userName" placeholder="Username">
+                        <input type="text" class="form-control" id="userName" name="userName" placeholder="Username" value="${user.userName}"/>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="email" class="col-lg-2 control-label">Email</label>
                       <div class="col-md-4">
-                         <input type="email" class="form-control" id="email" name="email" placeholder="Email" >
+                         <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="${user.userEmail}"/>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="password" class="col-md-2 control-label">Password</label>
                       <div class="col-md-4">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="${user.password}"/>
                       </div>
                     </div>                    
                     <div class="form-group">

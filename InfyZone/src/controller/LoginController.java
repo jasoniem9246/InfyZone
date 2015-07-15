@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import data.UserDB;
 import data.ProductDB;
+import model.DemoCustomer;
+import model.DemoOrder;
 import model.DemoProductInfo;
 import model.DemoUser;
 /**
@@ -65,15 +67,16 @@ public class LoginController extends HttpServlet {
 			String newCustomerPassword = request.getParameter("password");
 			 if(newUserName != null &&  newCustomerEmailid != null && newCustomerPassword != null )
 				{
-				 System.out.println("GO INTO Register");
 					HttpSession session = request.getSession();
 					
 					UserDB.AddUser(newUserName, newCustomerEmailid, newCustomerPassword);
 					
 					//List<DemoProductInfo> products = ProductDB.GetAllProducts();
-				
-					DemoUser user = UserDB.GetUserByEmailAndPassword(newCustomerEmailid, newCustomerPassword);
 					
+					DemoCustomer cust = new DemoCustomer();
+					DemoUser user = UserDB.GetUserByEmailAndPassword(newCustomerEmailid, newCustomerPassword);
+					cust.setDemoUser(user);
+					UserDB.AddCustomer(cust);
 					try
 					{
 						loggedin = true;
@@ -102,16 +105,18 @@ public class LoginController extends HttpServlet {
 				String oldUserEmail = request.getParameter("email");
 				String oldUserPassword = request.getParameter("password");
 				
-				List<DemoUser> user = UserDB.ValidateExistingUser(oldUserEmail, oldUserPassword); 
-				System.out.println();
+				List<DemoUser> users = UserDB.ValidateExistingUser(oldUserEmail, oldUserPassword); 
+				DemoUser user = users.get(0);
+				
+				
+	
 				if(user != null)
 				{
 					HttpSession session = request.getSession();
-					
+					DemoCustomer cust = UserDB.GetCustomerByUserID(user.getUserId());
 					String[] parsePreviousURL = request.getParameter("previousURL").split("/");
 					
 					String urlPath = parsePreviousURL[parsePreviousURL.length - 1];
-					System.out.println(urlPath);
 					
 					/*Checking for the previous page to redirect the user accordingly*/
 					
@@ -122,7 +127,8 @@ public class LoginController extends HttpServlet {
 							loggedin = true;
 							//request.setAttribute("products", products);
 							session.setAttribute("loggedin", loggedin);
-							session.setAttribute("user", user.get(0));
+							session.setAttribute("cust", cust);
+							session.setAttribute("user", user);
 						}
 						catch(Exception e)
 						{

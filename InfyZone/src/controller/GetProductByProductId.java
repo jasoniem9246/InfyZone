@@ -46,13 +46,13 @@ public class GetProductByProductId extends HttpServlet {
 		
 		String productId = request.getParameter("productID");
 		
-			if(! productId.equals(null))
+		if(productId != null)
 		{
-			List<DemoProductInfo> products = ProductDB.GetProductByProductId(productId);
-			//HttpSession session = request.getSession();
+			DemoProductInfo product = ProductDB.GetSingleProductByProductId(productId);
+			
 			try
 			{
-				request.setAttribute("product", products);
+				request.setAttribute("product", product);
 			}
 			catch(Exception e)
 			{
@@ -62,6 +62,8 @@ public class GetProductByProductId extends HttpServlet {
 			getServletContext()
 			.getRequestDispatcher("/product_detail.jsp")
 			.forward(request, response);
+		} else {
+			response.sendRedirect("MainController");
 		}
 	}
 	
