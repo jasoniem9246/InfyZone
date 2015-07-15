@@ -41,7 +41,7 @@ public class UserDB {
 	}
 	
 	
-	protected static void AddUser(String newUserName, String newCustomerEmailid, String newCustomerPassword)
+	public static void AddUser(String newUserName, String newCustomerEmailid, String newCustomerPassword)
 	{
 		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
