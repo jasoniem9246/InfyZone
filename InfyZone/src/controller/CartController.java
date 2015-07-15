@@ -1,63 +1,88 @@
 package controller;
 
-import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.annotation.PostConstruct;
 
-/**
- * Servlet implementation class CartController
- */
-@WebServlet("/CartController")
-public class CartController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CartController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+import data.ProductDB;
+import model.DemoOrder;
+import model.DemoOrderItem;
+import model.DemoProductInfo;
+import model.DemoUser;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doPost(request, response);
+public class CartController {
+	private String productID;
+	private List<DemoProductInfo> products;
+	private static List<DemoOrder> orderList;
+	private int quantity;
+	
+	@PostConstruct
+	public void init(){
+		products = ProductDB.GetAllProducts();
+		orderList = new LinkedList<DemoOrder>();
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		HttpSession session = request.getSession();
-		//System.out.println((boolean) session.getAttribute("loggedin"));
-		//Session a = session.getAttribute("loggedin");
-		boolean loggedin = session.getAttribute("loggedin") != null ? true : false;
-		System.out.println(loggedin);
-		if(loggedin)
-		{
-			//System.out.println((boolean) session.getAttribute("loggedin"));
-			getServletContext()
-			.getRequestDispatcher("/CartServlet")
-			.forward(request, response);
-		}
-		else
-		{
-			if(!loggedin)
-			{
-				response.sendRedirect("login.jsp");
-			}
-		}
-		
+	public String getProductID() {
+		return productID;
 	}
 
+	public void setProductID(String productID) {
+		this.productID = productID;
+	}
+
+	public List<DemoProductInfo> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<DemoProductInfo> products) {
+		this.products = products;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
+	
+	public List<DemoOrder> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(List<DemoOrder> orderList) {
+		this.orderList = orderList;
+	}
+	
+	public static DemoOrderItem createOrder(DemoUser user, String productID, String quantity) {
+	
+		DemoProductInfo prod = ProductDB.GetSingleProductByProductId(productID);
+		
+		//save order item
+		BigDecimal bd = new BigDecimal(quantity);
+		DemoOrderItem orderItem = new DemoOrderItem();
+		//orderItem.setDiscountAmount(new BigDecimal(0));
+		orderItem.setUnitPrice(prod.getListPrice());
+		orderItem.setDemoProductInfo(prod);
+		orderItem.setQuantity(bd);
+		
+		
+		
+		//save order 
+		DemoOrder order = new DemoOrder();
+		order.setDemoUser(user);
+		List<DemoOrderItem> orderItems = new LinkedList<DemoOrderItem>();
+		orderItems.add(orderItem);
+		order.setDemoOrderItems(orderItems);
+		
+		//save in order history
+		orderList.add(order);
+		
+		return orderItem;
+		//save orderItem into session
+		//session.setAttribute("orderItem", orderItem);
+	}
 }
