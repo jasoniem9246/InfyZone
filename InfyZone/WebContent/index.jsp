@@ -52,7 +52,7 @@
                   <!-- Price -->
                   <div class="item-price pull-left"><fmt:formatNumber value="${product.listPrice}" type="currency"/></div>
                   <!-- Add to cart -->
-                  <div class="pull-right"><a href="CartController?productID=${product.productId}" class="btn btn-danger btn-sm">Add to Cart</a></div>
+                  <div class="pull-right"><a href="CartServlet?productID=${product.productId}" class="btn btn-danger btn-sm">Add to Cart</a></div>
                   <div class="clearfix"></div>
                 </div>
               </div>

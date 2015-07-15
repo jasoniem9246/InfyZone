@@ -107,7 +107,7 @@ public class UserDB {
 	
 	public static  DemoCustomer GetCustomerByUserID(long userId) {
 		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
-		String qString = "Select c from DemoCustomer c where c.demoUser.userId = : userId";
+		String qString = "Select c from DemoCustomer c where c.demoUser.userId = :userId";
 		TypedQuery<DemoCustomer> q = em.createQuery(qString, DemoCustomer.class);
 		q.setParameter("userId", userId);
 		

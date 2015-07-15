@@ -11,11 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controller.CartController;
+import model.DemoOrderItem;
 import model.DemoProductInfo;
-import data.Cart;
-import data.Product;
-import data.ProductDB;
-import data.LineItem;
+import model.DemoUser;
 
 /**
  * Servlet implementation class CartServlet
@@ -45,77 +44,30 @@ public class CartServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//HttpSession session = request.getSession();
-		
-ServletContext sc = getServletContext();
-		
-		String action = request.getParameter("action");
-		if(action == null)
-		{
-			action = "cart";
+		HttpSession session = request.getSession();
+		boolean loggedin = session.getAttribute("loggedin") != null ? true : false;
+		DemoUser user = (DemoUser) session.getAttribute("user");
+		String productID = request.getParameter("productID");
+		String quantity = request.getParameter("quantity");
+		//check user login
+		if(user != null) {
+			DemoOrderItem orderitem = CartController.createOrder(user, productID, quantity);
+			
+			
+			session.setAttribute("orderItem", orderitem);
+			
+			getServletContext()
+			.getRequestDispatcher("/shopping_cart.jsp")
+			.forward(request, response);
 		}
 		
-		String url = "/index.jsp";
-		
-		if(action.equals("shop"))
+		else
 		{
-			url = "/index.jsp";
+			if(!loggedin)
+			{
+				response.sendRedirect("login.jsp");
+			}
 		}
-		
-		else if(action.equals("cart"))
-		{
-			//String productCode = request.getParameter("productID");
-			HttpSession session = request.getSession();
-			
-			String productID = (String) request.getAttribute("productID");
-			String quantityString = request.getParameter("quantity");
-			
-			Cart cart = (Cart) session.getAttribute("cart");
-			
-			if(cart == null)
-			{
-				cart = new Cart();
-			}
-			
-			int quantity;
-			
-			try
-			{
-				quantity = Integer.parseInt(quantityString);
-				if(quantity < 0)
-				{
-					quantity = 1;
-				}
-				
-			}
-			catch(NumberFormatException e)
-			{
-				quantity = 1;
-			}
-			
-	       //    String path = sc.getRealPath("/WEB-INF/products.txt");
-	            DemoProductInfo product = ProductDB.GetSingleProductByProductId(productID);
-
-	            LineItem lineItem = new LineItem();
-	            lineItem.setProduct(product);;
-	            lineItem.setQuantity(quantity);
-	            if (quantity > 0) {
-	                cart.addItem(lineItem);
-	            } else if (quantity == 0) {
-	                cart.removeItem(lineItem);
-	            }
-
-	            session.setAttribute("cart", cart);
-	            url = "/cart.jsp";
-		}
-		
-		 else if (action.equals("checkout")) {
-	            url = "/checkout.jsp";
-	        }
-
-	        sc.getRequestDispatcher(url)
-	                .forward(request, response);
-		
 	}
 
 }
