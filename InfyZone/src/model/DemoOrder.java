@@ -1,9 +1,12 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -42,7 +45,7 @@ public class DemoOrder implements Serializable {
 
 	//bi-directional many-to-one association to DemoOrderItem
 	@OneToMany(mappedBy="demoOrder")
-	private List<DemoOrderItem> demoOrderItems;
+	private List<DemoOrderItem> demoOrderItems = new LinkedList<DemoOrderItem>();
 
 	public DemoOrder() {
 	}
