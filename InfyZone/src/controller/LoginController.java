@@ -64,7 +64,7 @@ public class LoginController extends HttpServlet {
 					
 					List<DemoProductInfo> products = ProductDB.GetAllProducts();
 				
-					DemoUser user = UserDB.
+					DemoUser user = UserDB.GetUserByEmailAndPassword(newCustomerEmailid, newCustomerPassword);
 					
 					try
 					{
