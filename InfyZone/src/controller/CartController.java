@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import data.ProductDB;
 import model.DemoOrder;
 import model.DemoOrderItem;
@@ -14,15 +12,8 @@ import model.DemoUser;
 
 public class CartController {
 	private String productID;
-	private List<DemoProductInfo> products;
-	private static List<DemoOrder> orderList;
 	private int quantity;
 	
-	@PostConstruct
-	public void init(){
-		products = ProductDB.GetAllProducts();
-		orderList = new LinkedList<DemoOrder>();
-	}
 
 	public String getProductID() {
 		return productID;
@@ -32,13 +23,6 @@ public class CartController {
 		this.productID = productID;
 	}
 
-	public List<DemoProductInfo> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<DemoProductInfo> products) {
-		this.products = products;
-	}
 
 	public int getQuantity() {
 		return quantity;
@@ -49,22 +33,12 @@ public class CartController {
 	}
 	
 	
-	public List<DemoOrder> getOrderList() {
-		return orderList;
-	}
-
-	public void setOrderList(List<DemoOrder> orderList) {
-		this.orderList = orderList;
-	}
-	
-	public static DemoOrderItem createOrder(DemoUser user, String productID, String quantity) {
-	
+	public static DemoOrder createOrder(DemoUser user, String productID, String quantity) {
+		System.out.println("id: " + productID);
 		DemoProductInfo prod = ProductDB.GetSingleProductByProductId(productID);
-		
-		//save order item
 		if(quantity == null)
 		{
-			quantity = "0";
+			quantity = "1";
 		}
 		BigDecimal bd = new BigDecimal(quantity);
 		DemoOrderItem orderItem = new DemoOrderItem();
@@ -73,21 +47,45 @@ public class CartController {
 		orderItem.setDemoProductInfo(prod);
 		orderItem.setQuantity(bd);
 		
-		
-		
 		//save order 
 		DemoOrder order = new DemoOrder();
 		order.setDemoUser(user);
 		List<DemoOrderItem> orderItems = new LinkedList<DemoOrderItem>();
 		orderItems.add(orderItem);
 		order.setDemoOrderItems(orderItems);
-		//System.out.println("1289y12");
-		//save in order history
-		System.out.println(order);
-		orderList.add(order);
 		
-		return orderItem;
-		//save orderItem into session
-		//session.setAttribute("orderItem", orderItem);
+		return order;
+	}
+	
+	public static DemoOrder setProductIntoOrder(DemoOrder order, String productID, String quantity) {
+		if(quantity == null)
+		{
+			quantity = "1";
+		}
+		
+		DemoProductInfo prod = ProductDB.GetSingleProductByProductId(productID);
+		//update existing product quantity
+		List<DemoOrderItem> orderItems = order.getDemoOrderItems();
+		boolean isUpdate = false;
+		BigDecimal bd = new BigDecimal(quantity);
+		for(DemoOrderItem orderItem : orderItems) {
+			if(orderItem.getDemoProductInfo().getProductId() == prod.getProductId()) {
+				orderItem.setQuantity(bd);
+				isUpdate = true;
+				break;
+			}
+		}
+		//stored new product
+		if(!isUpdate) {
+			DemoOrderItem orderItem = new DemoOrderItem();
+			orderItem.setUnitPrice(prod.getListPrice());
+			orderItem.setDemoProductInfo(prod);
+			orderItem.setQuantity(bd);	
+			orderItems.add(orderItem);
+		}
+		
+		order.setDemoOrderItems(orderItems);
+		
+		return order;
 	}
 }

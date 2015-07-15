@@ -1,6 +1,7 @@
 
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.CartController;
+import data.ProductDB;
+import model.DemoOrder;
 import model.DemoOrderItem;
 import model.DemoProductInfo;
 import model.DemoUser;
@@ -51,10 +54,16 @@ public class CartServlet extends HttpServlet {
 		String quantity = request.getParameter("quantity");
 		//check user login
 		if(user != null) {
-			DemoOrderItem orderitem = CartController.createOrder(user, productID, quantity);
+			DemoOrder order = (DemoOrder) session.getAttribute("order");
+			if(order != null) {
+				order = CartController.setProductIntoOrder(order, productID, quantity);
+			} else {
+				order = CartController.createOrder(user, productID, quantity);
+				System.out.println("create order");
+			}
 			
-			
-			session.setAttribute("orderItem", orderitem);
+			System.out.println("Quantity: " + order.getDemoOrderItems().get(0).getQuantity());
+			session.setAttribute("order", order);
 			
 			getServletContext()
 			.getRequestDispatcher("/shopping_cart.jsp")
