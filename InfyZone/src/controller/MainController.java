@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.ProductDB;
 import model.DemoProductInfo;
 import model.DemoCustomer;
 import model.DemoOrder;
@@ -17,6 +18,8 @@ import model.DemoOrderItem;
 //import model.DemoState;
 import model.DemoUser;
 
+import data.ProductDB;
+import data.UserDB;
 /**
  * Servlet implementation class MainController
  */
@@ -54,12 +57,89 @@ public class MainController extends HttpServlet {
 		
 		String newUserName, newCustomerEmailid, newCustomerPassword, oldUserName, oldUserPassword;
 		newUserName = newCustomerEmailid = newCustomerPassword = oldUserName = oldUserPassword = null;
+		
+		
+		
+		
 		/*------------------------------------------------------------------------------------------*/
+		/*When should we get all the products to display on the jsp*/
+		/*Ask Jason to check the variable names that he has used in his index.jsp - error with productID*/
+		if(action == null || action.equals(""))
+		{
+			
+			List<DemoProductInfo> products = data.ProductDB.GetAllProducts();
+			
+			List<String> categories = ProductDB.GetAllCategories();
+			
+			HttpSession session = request.getSession();
+			try
+			{
+				request.setAttribute("products", products);
+				request.setAttribute("categories", categories);
+			}
+			catch(Exception e)
+			{
+				request.setAttribute("message", "<div class='alert alert-danger role='alert'>Error! Danger" + e + "</div>");
+			}
+				System.out.println("Hello WOrld");
+			getServletContext()
+			.getRequestDispatcher("/index.jsp")
+			.forward(request, response);
+			
+			
+		}
+		
+		else
+		{
+			if(action != null)
+			{
+				List<DemoProductInfo> products = ProductDB.GetProductByProductName(action);
+				//HttpSession session = request.getSession();
+				try
+				{
+					request.setAttribute("products", products);
+				}
+				catch(Exception e)
+				{
+					request.setAttribute("message", "<div class='alert alert-danger role='alert'>Error! Danger" + e + "</div>");
+				}
+				
+				getServletContext()
+				.getRequestDispatcher("/index.jsp")
+				.forward(request, response);
+			}
+		}
+		
+		/*------------------------------------------------------------------------------------------*/
+		/*When Category Selected, Retrieve information by Category Name*/
+		/*	
+		if(!categoryName.equals(null))
+		{
+			List<DemoProductInfo> products = ProductDB.GetProductByProductCategory(categoryName);
+			//HttpSession session = request.getSession();
+			try
+			{
+				request.setAttribute("products", products);
+			}
+			catch(Exception e)
+			{
+				request.setAttribute("message", "<div class='alert alert-danger role='alert'>Error! Danger" + e + "</div>");
+			}
+			
+			getServletContext()
+			.getRequestDispatcher("/index.jsp")
+			.forward(request, response);
+		}
+		
+		
+		/*------------------------------------------------------------------------------------------*/
+		
+		/*	
 		if(action.equals("register"))
 		{	
 			/*New Customer Details*/
 			/*Adding a new user - User Information we are adding are username, Email ID, Password*/
-			
+		/*	
 			 newUserName = request.getParameter("name");
 			 newCustomerEmailid = request.getParameter("email");
 			 newCustomerPassword = request.getParameter("password");
@@ -94,7 +174,7 @@ public class MainController extends HttpServlet {
 				/*Old Customer Detail Verification*/
 				/*Verifying if the user exists - User Information verified are username and password*/
 				/*Class Related - UserDB*/
-				oldUserName = request.getParameter("name");
+		/*		oldUserName = request.getParameter("name");
 				oldUserPassword = request.getParameter("password");
 				
 				List<DemoUser> user = UserDB.ValidateExistingUser(oldUserName, oldUserPassword); 
@@ -107,7 +187,7 @@ public class MainController extends HttpServlet {
 					/*Checking for the previous page to redirect the user accordingly*/
 					
 						/*Redirect the user to index.jsp as he tried to directly login without choosing the product*/
-						List<DemoProductInfo> products = ProductDB.GetAllProducts();
+		/*				List<DemoProductInfo> products = ProductDB.GetAllProducts();
 						try
 						{
 							request.setAttribute("products", products);
@@ -124,7 +204,7 @@ public class MainController extends HttpServlet {
 				}
 					
 				/*If the user fails to login redirect him to the login page*/
-				else
+		/*		else
 				{
 					getServletContext()
 					.getRequestDispatcher("/login.jsp")
@@ -140,73 +220,11 @@ public class MainController extends HttpServlet {
 		
 		
 
-		/*------------------------------------------------------------------------------------------*/
-		/*When should we get all the products to display on the jsp*/
-		if(action.equals(null))
-		{
-			List<DemoProductInfo> products = ProductDB.GetAllProducts();
-			List<String> categories = ProductDB.GetAllCategories();
-			//HttpSession session = request.getSession();
-			try
-			{
-				request.setAttribute("products", products);
-				request.setAttribute("categories", categories);
-			}
-			catch(Exception e)
-			{
-				request.setAttribute("message", "<div class='alert alert-danger role='alert'>Error! Danger" + e + "</div>");
-			}
-			
-			getServletContext()
-			.getRequestDispatcher("/index.jsp")
-			.forward(request, response);
-		}
 		
-		else
-		{
-			if(!action.equals(null))
-			{
-				List<DemoProductInfo> products = ProductDB.GetProductByProductName(action);
-				//HttpSession session = request.getSession();
-				try
-				{
-					request.setAttribute("products", products);
-				}
-				catch(Exception e)
-				{
-					request.setAttribute("message", "<div class='alert alert-danger role='alert'>Error! Danger" + e + "</div>");
-				}
-				
-				getServletContext()
-				.getRequestDispatcher("/index.jsp")
-				.forward(request, response);
-			}
-		}
-		
-		/*------------------------------------------------------------------------------------------*/
-		/*When Category Selected, Retrieve information by Category Name*/
-		
-		if(!categoryName.equals(null))
-		{
-			List<DemoProductInfo> products = ProductDB.GetProductByProductCategory(categoryName);
-			//HttpSession session = request.getSession();
-			try
-			{
-				request.setAttribute("products", products);
-			}
-			catch(Exception e)
-			{
-				request.setAttribute("message", "<div class='alert alert-danger role='alert'>Error! Danger" + e + "</div>");
-			}
-			
-			getServletContext()
-			.getRequestDispatcher("/index.jsp")
-			.forward(request, response);
-		}
 		/*------------------------------------------------------------------------------------------*/
 		/*Retrieve the products by product Id*/
 		
-		if(! productId.equals(null))
+		/*	if(! productId.equals(null))
 		{
 			List<DemoProductInfo> products = ProductDB.GetProductByProductId(productId);
 			//HttpSession session = request.getSession();
@@ -236,7 +254,7 @@ public class MainController extends HttpServlet {
 		/*------------------------------------------------------------------------------------------*/
 		/*Shopping cart module initiation - Add to cart initiated when no session variable available and productID parameter coming in 
 		 * and getting stored in addingproducttocart in string form is not null*/
-		if((request.getSession(true) != null) && (! addingproducttocart.equals(null)))
+		/*	if((request.getSession(true) != null) && (! addingproducttocart.equals(null)))
 		{
 			AddToCart(request, response, addingproducttocart);
 		}
@@ -252,7 +270,7 @@ public class MainController extends HttpServlet {
 	
 	
 	
-	protected  void AddToCart(HttpServletRequest request, HttpServletResponse response, String addingproducttocart)
+	/*protected  void AddToCart(HttpServletRequest request, HttpServletResponse response, String addingproducttocart)
 	{
 		request.setAttribute("addingProductToCart", addingproducttocart);
 		
@@ -287,6 +305,6 @@ public class MainController extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 }
 
