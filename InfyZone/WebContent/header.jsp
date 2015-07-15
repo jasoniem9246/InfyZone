@@ -102,7 +102,7 @@
 									<ul id="ddsubmenu1" class="ddsubmenustyle">
 										<li><a href="ViewCart">View Cart</a></li>
 										<li><a href="ShowOrderHistory">Order History</a></li>
-										<li><a href="/editprofile">Edit Profile</a></li>
+										<li><a href="editprofile.jsp">Edit Profile</a></li>
 									</ul>
 								</li>   
 							</c:if>                 
