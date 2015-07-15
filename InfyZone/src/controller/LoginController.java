@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String action = request.getParameter("action");
-		
+		boolean loggedin = false;
 		if(action.equals("register"))
 		{	
 			/*New Customer Details*/
@@ -63,10 +63,15 @@ public class LoginController extends HttpServlet {
 					UserDB.AddUser(newUserName, newCustomerEmailid, newCustomerPassword);
 					
 					List<DemoProductInfo> products = ProductDB.GetAllProducts();
+				
+					DemoUser user = UserDB.
 					
 					try
 					{
+						loggedin = true;
 						request.setAttribute("products", products);
+						session.setAttribute("loggedin", loggedin);
+						session.setAttribute("user", user);
 					}
 					catch(Exception e)
 					{
@@ -92,7 +97,7 @@ public class LoginController extends HttpServlet {
 				
 				List<DemoUser> user = UserDB.ValidateExistingUser(oldUserEmail, oldUserPassword); 
 				
-				if(!user.get(0).getUserName().equals(oldUserEmail) && !user.get(0).getPassword().equals(oldUserPassword))
+				if(user.get(0).getUserName().equals(oldUserEmail) && user.get(0).getPassword().equals(oldUserPassword))
 				{
 					HttpSession session = request.getSession();
 					
@@ -103,7 +108,10 @@ public class LoginController extends HttpServlet {
 						List<DemoProductInfo> products = ProductDB.GetAllProducts();
 						try
 						{
+							loggedin = true;
 							request.setAttribute("products", products);
+							session.setAttribute("loggedin", loggedin);
+							session.setAttribute("user", user.get(0));
 						}
 						catch(Exception e)
 						{
