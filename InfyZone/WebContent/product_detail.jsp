@@ -23,7 +23,7 @@
                         <div class="col-md-4 col-xs-5">
 
                           <div class="item-image">
-                              <img src="${product.productImageURL}" alt="" />
+                              <img src="${product.productimageurl}" alt="" />
                           </div>
                               
 
@@ -39,7 +39,7 @@
                                      <!-- Quantity and add to cart button -->
                                     
                                     <div class="input-group">
-                                       <form method="post" action="ShoppingCart">
+                                       <form method="post" action="CartController">
                                        <input type="text" class="form-control" name="quantity" placeholder="2">
                                        <input type="hidden" name="productId" value="${productId}"/>
                                        <span class="input-group-btn">

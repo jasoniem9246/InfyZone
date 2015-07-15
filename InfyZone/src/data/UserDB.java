@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import model.DemoCustomer;
 import model.DemoUser;
 
 public class UserDB {
@@ -78,6 +79,60 @@ public class UserDB {
 	
 	}
 	
+	public static void AddCustomer(DemoCustomer cust)
+	{
+		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		trans.begin();
+		
+		try
+		{
+			em.persist(cust);
+			trans.commit();
+			
+		}
+		catch(NoResultException e)
+		{
+			System.out.println(e);
+			trans.rollback();
+		}
+		
+		finally
+		{
+			em.close();
+		}
+	
+	}
+	
+	
+	public static  DemoCustomer GetCustomerByUserID(long userId) {
+		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
+		String qString = "Select c from DemoCustomer c where c.demoUser.userId = :userId";
+		TypedQuery<DemoCustomer> q = em.createQuery(qString, DemoCustomer.class);
+		q.setParameter("userId", userId);
+		
+		DemoCustomer i = null;
+		
+		try
+		{
+			i = q.getSingleResult();
+			if(i == null)
+			{
+				i = null;
+			}
+		}
+		catch(NoResultException e)
+		{
+			System.out.println(e);
+		}
+		
+		finally
+		{
+			em.close();
+		}
+		return i;
+		
+	}
 	
 	public static  DemoUser GetUserByEmailAndPassword(String oldUserEmail, String oldUserPassword)
 	{
