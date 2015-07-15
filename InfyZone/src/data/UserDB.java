@@ -10,12 +10,12 @@ import javax.persistence.TypedQuery;
 import model.DemoUser;
 
 public class UserDB {
-	protected static  List<DemoUser> ValidateExistingUser(String oldUserName, String oldUserPassword)
+	protected static  List<DemoUser> ValidateExistingUser(String oldUserEmail, String oldUserPassword)
 	{
 		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
-		String qString = "Select u from DemoUser u where u.userName = :oldUserName and u.password = :oldUserPassword";
+		String qString = "Select u from DemoUser u where u.userEmail = :oldUserEmail and u.password = :oldUserPassword";
 		TypedQuery<DemoUser> q = em.createQuery(qString, DemoUser.class);
-		q.setParameter("oldUserName", oldUserName);
+		q.setParameter("oldUserEmail", oldUserEmail);
 		q.setParameter("oldUserPassword", oldUserPassword);
 		List<DemoUser> i = null;
 		
