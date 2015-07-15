@@ -5,8 +5,8 @@
 		<class>model.DemoCustomer</class>
 		<class>model.DemoOrder</class>
 		<class>model.DemoOrderItem</class>
-		<class>model.DemoProductInfo</class>
 		<class>model.DemoUser</class>
+		<class>model.DemoProductInfo</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
