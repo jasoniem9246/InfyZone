@@ -86,7 +86,7 @@
                <div class="col-md-1 col-sm-1">
                   <!-- Logo -->
                   <div class="logo">
-                     <h1><a href="index.jsp">InfyZone</a></h1>
+                     <h1><a href="MainController">InfyZone</a></h1>
                   </div>
                </div>
 				<div class="col-md-4 col-sm-3">
@@ -95,7 +95,7 @@
 						<div id="ddtopmenubar" class="mattblackmenu">
 							<ul>
 								<li>
-									<a href="index.jsp" rel="ddsubmenu1">Home</a>
+									<a href="MainController" rel="ddsubmenu1">Home</a>
 								</li>
 							<c:if test="${!empty user}">
 								<li><a href="#" rel="ddsubmenu1">Account</a>
@@ -129,13 +129,21 @@
                
                <div class="col-md-3 col-sm-3">
                   <div class="kart-links">
-                     <a href="login.jsp">Login</a> 
-                     <a href="register.jsp">Signup</a>
-                     <a data-toggle="modal" href="#shoppingcart"><i class="fa fa-shopping-cart"></i> 
-                     <c:if test="${!empty order.demoOrderItems}">
+						<c:choose>
+							<c:when test="${empty user}">
+								<a href="login.jsp">Login</a>
+								<a href="register.jsp">Signup</a>
+								<a data-toggle="modal" href="#shoppingcart"><i
+									class="fa fa-shopping-cart"></i> <c:if
+										test="${!empty order.demoOrderItems}">
                      	${fn:length(order.demoOrderItems)} - ${order.orderTotal}
-                     </c:if></a>
-                  </div>
+                     			</c:if></a>
+							</c:when>
+							<c:otherwise>
+								<a href="LoginController?action=logout">Logout</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
                </div>
             </div>
          </div>

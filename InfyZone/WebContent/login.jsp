@@ -28,7 +28,7 @@
                         <div class="cool-block-bor">
                         
                            <h3>Login</h3>
-                           <form class="form-horizontal" role="form" method="get" action="MainController">
+                           <form class="form-horizontal" role="form" method="post" action="LoginController">
                              <div class="form-group">
                                <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
                                <div class="col-lg-10">
@@ -58,6 +58,12 @@
                                </div>
                              </div>
                            </form>
+                           
+                           <c:if test="${!empty message}">
+                           <div>
+                           	<h3>${message}</h3>
+                           </div>
+                           </c:if>
                            
                         </div>
                      </div>   
