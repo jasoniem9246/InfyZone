@@ -1,9 +1,13 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -11,8 +15,12 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="DEMO_PRODUCT_INFO")
-@NamedQuery(name="DemoProductInfo.findAll", query="SELECT d FROM DemoProductInfo d")
+@Table(name="DEMO_PRODUCT_INFO", schema="TESTUSER3")
+@NamedQueries({
+	@NamedQuery(name="DemoProductInfo.findAll", query="SELECT d FROM DemoProductInfo d"),
+	@NamedQuery(name="DemoProductInfo.findProductById", query="SELECT d FROM DemoProductInfo d where d.productId = :productId"),
+	@NamedQuery(name="DemoProductInfo.getMaxID", query="select max(d.productId) from DemoProductInfo d")
+})
 public class DemoProductInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -50,6 +58,13 @@ public class DemoProductInfo implements Serializable {
 
 	@Column(name="PRODUCT_NAME", length=50)
 	private String productName;
+
+	@Column(length=400)
+	private String productimageurl;
+
+	//bi-directional many-to-one association to DemoOrderItem
+	@OneToMany(mappedBy="demoProductInfo")
+	private List<DemoOrderItem> demoOrderItems = new LinkedList<>();
 
 	public DemoProductInfo() {
 	}
@@ -132,6 +147,36 @@ public class DemoProductInfo implements Serializable {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public String getProductimageurl() {
+		return this.productimageurl;
+	}
+
+	public void setProductimageurl(String productimageurl) {
+		this.productimageurl = productimageurl;
+	}
+
+	public List<DemoOrderItem> getDemoOrderItems() {
+		return this.demoOrderItems;
+	}
+
+	public void setDemoOrderItems(List<DemoOrderItem> demoOrderItems) {
+		this.demoOrderItems = demoOrderItems;
+	}
+
+	public DemoOrderItem addDemoOrderItem(DemoOrderItem demoOrderItem) {
+		getDemoOrderItems().add(demoOrderItem);
+		demoOrderItem.setDemoProductInfo(this);
+
+		return demoOrderItem;
+	}
+
+	public DemoOrderItem removeDemoOrderItem(DemoOrderItem demoOrderItem) {
+		getDemoOrderItems().remove(demoOrderItem);
+		demoOrderItem.setDemoProductInfo(null);
+
+		return demoOrderItem;
 	}
 
 }
