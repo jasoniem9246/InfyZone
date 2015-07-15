@@ -41,7 +41,7 @@ public class CartController extends HttpServlet {
 		HttpSession session = request.getSession();
 		//System.out.println((boolean) session.getAttribute("loggedin"));
 		//Session a = session.getAttribute("loggedin");
-		boolean loggedin = (boolean) session.getAttribute("loggedin");
+		boolean loggedin = session.getAttribute("loggedin") != null ? true : false;
 		System.out.println(loggedin);
 		if(loggedin)
 		{
@@ -52,15 +52,9 @@ public class CartController extends HttpServlet {
 		}
 		else
 		{
-			if((boolean) session.getAttribute(null))
+			if(!loggedin)
 			{
-				String productID = request.getParameter("productId");
-				session.setAttribute("productID", productID);
-				
-				
-				getServletContext()
-				.getRequestDispatcher("/LoginController")
-				.forward(request, response);
+				response.sendRedirect("login.jsp");
 			}
 		}
 		
