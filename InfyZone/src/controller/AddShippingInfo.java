@@ -71,7 +71,7 @@ public class AddShippingInfo extends HttpServlet {
 			cust.setCustState(CustState);
 			cust.setCustPostalCode(CustPostCode);
 			cust.setPhoneNumber1(CustPhoneNumber);
-			cust.setCustEmail(CustEmail);
+			//cust.setCustEmail(CustEmail);
 			em.persist(cust);
 			
 			trans.commit();

@@ -12,13 +12,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="DEMO_ORDERS",schema="TESTUSER3")
+@Table(name="DEMO_ORDERS", schema="TESTUSER3")
 @NamedQuery(name="DemoOrder.findAll", query="SELECT d FROM DemoOrder d")
 public class DemoOrder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="DEMO_ORDERS_ORDERID_GENERATOR" )
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_ORDERS_ORDERID_GENERATOR")
 	@Column(name="ORDER_ID", unique=true, nullable=false)
 	private long orderId;
 
@@ -35,7 +36,7 @@ public class DemoOrder implements Serializable {
 	private DemoCustomer demoCustomer;
 
 	//bi-directional many-to-one association to DemoUser
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="USER_ID")
 	private DemoUser demoUser;
 

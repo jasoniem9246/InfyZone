@@ -11,13 +11,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="DEMO_CUSTOMERS",schema="TESTUSER3")
+@Table(name="DEMO_CUSTOMERS", schema="TESTUSER3")
 @NamedQuery(name="DemoCustomer.findAll", query="SELECT d FROM DemoCustomer d")
 public class DemoCustomer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR" )
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR")
 	@Column(name="CUSTOMER_ID", unique=true, nullable=false)
 	private long customerId;
 
@@ -26,9 +27,6 @@ public class DemoCustomer implements Serializable {
 
 	@Column(name="CUST_CITY", length=30)
 	private String custCity;
-
-	@Column(name="CUST_EMAIL", length=30)
-	private String custEmail;
 
 	@Column(name="CUST_FIRST_NAME", nullable=false, length=20)
 	private String custFirstName;
@@ -53,6 +51,11 @@ public class DemoCustomer implements Serializable {
 
 	@Column(name="PHONE_NUMBER2", length=25)
 	private String phoneNumber2;
+
+	//bi-directional many-to-one association to DemoUser
+	@ManyToOne
+	@JoinColumn(name="USER_ID")
+	private DemoUser demoUser;
 
 	//bi-directional many-to-one association to DemoOrder
 	@OneToMany(mappedBy="demoCustomer")
@@ -83,14 +86,6 @@ public class DemoCustomer implements Serializable {
 
 	public void setCustCity(String custCity) {
 		this.custCity = custCity;
-	}
-
-	public String getCustEmail() {
-		return this.custEmail;
-	}
-
-	public void setCustEmail(String custEmail) {
-		this.custEmail = custEmail;
 	}
 
 	public String getCustFirstName() {
@@ -155,6 +150,14 @@ public class DemoCustomer implements Serializable {
 
 	public void setPhoneNumber2(String phoneNumber2) {
 		this.phoneNumber2 = phoneNumber2;
+	}
+
+	public DemoUser getDemoUser() {
+		return this.demoUser;
+	}
+
+	public void setDemoUser(DemoUser demoUser) {
+		this.demoUser = demoUser;
 	}
 
 	public List<DemoOrder> getDemoOrders() {

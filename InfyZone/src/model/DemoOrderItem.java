@@ -10,13 +10,14 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
-@Table(name="DEMO_ORDER_ITEMS",schema="TESTUSER3")
+@Table(name="DEMO_ORDER_ITEMS", schema="TESTUSER3")
 @NamedQuery(name="DemoOrderItem.findAll", query="SELECT d FROM DemoOrderItem d")
 public class DemoOrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="DEMO_ORDER_ITEMS_ORDERITEMID_GENERATOR" )
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_ORDER_ITEMS_ORDERITEMID_GENERATOR")
 	@Column(name="ORDER_ITEM_ID", unique=true, nullable=false, precision=3)
 	private long orderItemId;
 

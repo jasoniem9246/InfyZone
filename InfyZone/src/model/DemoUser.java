@@ -12,13 +12,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="DEMO_USERS",schema="TESTUSER3")
+@Table(name="DEMO_USERS", schema="TESTUSER3")
 @NamedQuery(name="DemoUser.findAll", query="SELECT d FROM DemoUser d")
 public class DemoUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="DEMO_USERS_USERID_GENERATOR" )
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_USERS_USERID_GENERATOR")
 	@Column(name="USER_ID", unique=true, nullable=false)
 	private long userId;
 
@@ -42,8 +43,15 @@ public class DemoUser implements Serializable {
 	@Column(name="\"QUOTA\"")
 	private BigDecimal quota;
 
+	@Column(name="USER_EMAIL", length=30)
+	private String userEmail;
+
 	@Column(name="USER_NAME", length=100)
 	private String userName;
+
+	//bi-directional many-to-one association to DemoCustomer
+	@OneToMany(mappedBy="demoUser")
+	private List<DemoCustomer> demoCustomers;
 
 	//bi-directional many-to-one association to DemoOrder
 	@OneToMany(mappedBy="demoUser")
@@ -108,12 +116,42 @@ public class DemoUser implements Serializable {
 		this.quota = quota;
 	}
 
+	public String getUserEmail() {
+		return this.userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
 	public String getUserName() {
 		return this.userName;
 	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public List<DemoCustomer> getDemoCustomers() {
+		return this.demoCustomers;
+	}
+
+	public void setDemoCustomers(List<DemoCustomer> demoCustomers) {
+		this.demoCustomers = demoCustomers;
+	}
+
+	public DemoCustomer addDemoCustomer(DemoCustomer demoCustomer) {
+		getDemoCustomers().add(demoCustomer);
+		demoCustomer.setDemoUser(this);
+
+		return demoCustomer;
+	}
+
+	public DemoCustomer removeDemoCustomer(DemoCustomer demoCustomer) {
+		getDemoCustomers().remove(demoCustomer);
+		demoCustomer.setDemoUser(null);
+
+		return demoCustomer;
 	}
 
 	public List<DemoOrder> getDemoOrders() {

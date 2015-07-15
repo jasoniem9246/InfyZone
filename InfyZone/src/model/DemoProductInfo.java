@@ -12,13 +12,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="DEMO_PRODUCT_INFO",schema="TESTUSER3")
+@Table(name="DEMO_PRODUCT_INFO", schema="TESTUSER3")
 @NamedQuery(name="DemoProductInfo.findAll", query="SELECT d FROM DemoProductInfo d")
 public class DemoProductInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="DEMO_PRODUCT_INFO_PRODUCTID_GENERATOR" )
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_PRODUCT_INFO_PRODUCTID_GENERATOR")
 	@Column(name="PRODUCT_ID", unique=true, nullable=false)
 	private long productId;
 
@@ -50,6 +51,9 @@ public class DemoProductInfo implements Serializable {
 
 	@Column(name="PRODUCT_NAME", length=50)
 	private String productName;
+
+	@Column(name="PRODUCTIMAGEURL", length=400)
+	private String productimageurl;
 
 	//bi-directional many-to-one association to DemoOrderItem
 	@OneToMany(mappedBy="demoProductInfo")
@@ -136,6 +140,14 @@ public class DemoProductInfo implements Serializable {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public String getProductimageurl() {
+		return this.productimageurl;
+	}
+
+	public void setProductimageurl(String productimageurl) {
+		this.productimageurl = productimageurl;
 	}
 
 	public List<DemoOrderItem> getDemoOrderItems() {
