@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="header.jsp"%>
 
 <!-- Hero starts -->
@@ -35,22 +35,22 @@
                 <div class="item-icon"><span>HOT</span></div>
                 <!-- Item image -->
                 <div class="item-image">
-                  <a href="ProductDetail?productID=${product.productId}">
+                  <a href="GetProductByProductId?productID=${product.productId}">
                   <img src="${product.productimageurl}" alt="" class="img-responsive"/>
                   </a>
                 </div>
                 <!-- Item details -->
                 <div class="item-details">
                   <!-- Name -->
-                  <h5><a href="ProductDetail?productID=${product.productId}">${product.productName}</a></h5>
+                  <h5><a href="GetProductByProductId?productID=${product.productId}">${product.productName}</a></h5>
                   <div class="clearfix"></div>
                   <!-- Para. Note more than 2 lines. -->
                   <p>${fn:substring(product.productDescription, 0, 20)}...</p>
                   <hr />
                   <!-- Price -->
-                  <div class="item-price pull-left">${product.listPrice}</div>
+                  <div class="item-price pull-left"><fmt:formatNumber value="${product.listPrice}" type="currency"/></div>
                   <!-- Add to cart -->
-                  <div class="pull-right"><a href="ShoppingCart?productID=${product.productId}" class="btn btn-danger btn-sm">Add to Cart</a></div>
+                  <div class="pull-right"><a href="CartController?productID=${product.productId}" class="btn btn-danger btn-sm">Add to Cart</a></div>
                   <div class="clearfix"></div>
                 </div>
               </div>

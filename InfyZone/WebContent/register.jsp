@@ -15,7 +15,7 @@
                         <div class="cool-block-bor">
                         
                            <h3>Register</h3>
-                           <form class="form-horizontal" role="form" method="post" action="MainController">
+                           <form class="form-horizontal" role="form" method="post" action="LoginController">
                              <div class="form-group">
                                <label for="inputName" class="col-lg-2 control-label">Name</label>
                                <div class="col-lg-10">

@@ -1,5 +1,7 @@
 package data;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -41,7 +43,7 @@ public class UserDB {
 	}
 	
 	
-	public static void AddUser(String newUserName, String newCustomerEmailid, String newCustomerPassword)
+	public static void AddUser(String newUserName, String newUserEmailid, String newUserPassword)
 	{
 		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
@@ -52,9 +54,13 @@ public class UserDB {
 			model.DemoUser user= new model.DemoUser();
 			
 			user.setUserName(newUserName);
-		//	user.setUserEmail(newUserEmailid);
-			user.setPassword(newCustomerPassword);
-			
+		    user.setUserEmail(newUserEmailid);
+			user.setPassword(newUserPassword);
+			user.setCreatedOn(new Date());
+			user.setAdminUser("N");
+			user.setQuota(new BigDecimal(20000));
+			user.setProducts("Y");
+			em.persist(user);
 			trans.commit();
 
 			

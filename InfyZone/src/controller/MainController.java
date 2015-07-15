@@ -17,7 +17,6 @@ import model.DemoOrder;
 import model.DemoOrderItem;
 //import model.DemoState;
 import model.DemoUser;
-
 import data.ProductDB;
 import data.UserDB;
 /**
@@ -56,7 +55,7 @@ public class MainController extends HttpServlet {
 		//String addingproducttocart = request.getParameter("productID");
 		
 		
-		
+		System.out.println("Action: " + action);
 		
 		
 		/*------------------------------------------------------------------------------------------*/
@@ -64,15 +63,21 @@ public class MainController extends HttpServlet {
 		
 		if(action == null || action.equals(""))
 		{
-			
+			HttpSession session = request.getSession();
 			List<DemoProductInfo> products = data.ProductDB.GetAllProducts();
-			
-			List<String> categories = ProductDB.GetAllCategories();
+
+			if(session.getAttribute("categories") == null) {
+				List<String> categories = ProductDB.GetAllCategories();
+				System.out.println(categories.get(0));
+				session.setAttribute("categories", categories);
+			} 
 		
 			try
 			{
+				
 				request.setAttribute("products", products);
-				request.setAttribute("categories", categories);
+				
+				
 			}
 			catch(Exception e)
 			{

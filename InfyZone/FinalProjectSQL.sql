@@ -1,3 +1,4 @@
+--ALTER Table Schema
 ALTER TABLE DEMO_USERS
 ADD USER_EMAIL VARCHAR2(30)
 
@@ -11,10 +12,15 @@ ALTER TABLE DEMO_PRODUCT_INFO
 ADD productImageURL VARCHAR2(400)
 
 
-
+-- Update Table
 update DEMO_USERS
-set USER_EMAIL = 'infy@gmail.com' and
+set USER_EMAIL = 'infy@gmail.com',
 password = '123456'
 where USER_ID = 1
+
+
+update DEMO_PRODUCT_INFO
+set PRODUCTIMAGEURL = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNEoggV9IST9JRx42osI5tBC_uWoi6oLYxvKl0yGRtv-w1m8yV'
+where PRODUCT_ID= 1;
 
 

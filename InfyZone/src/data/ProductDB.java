@@ -162,6 +162,33 @@ public class ProductDB {
 		return i;
 	}
 	
+	public static DemoProductInfo GetSingleProductByProductId(String productID)
+	{
+		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
+		String qString = "Select p from DemoProductInfo p where p.productId = :productID";
+		TypedQuery<DemoProductInfo> q = em.createQuery(qString, DemoProductInfo.class);
+		q.setParameter("productID", productID);
+		DemoProductInfo i = null;
+		
+		try
+		{
+			i = q.getSingleResult();
+			if(i == null)
+			{
+				i = null;
+			}
+		}
+		catch(NoResultException e)
+		{
+			System.out.println(e);
+		}
+		
+		finally
+		{
+			em.close();
+		}
+		return i;
+	}
 	
 	
 	
