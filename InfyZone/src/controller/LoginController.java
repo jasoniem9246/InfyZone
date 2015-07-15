@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import data.UserDB;
 import data.ProductDB;
+import model.DemoOrder;
 import model.DemoProductInfo;
 import model.DemoUser;
 /**
@@ -65,7 +66,6 @@ public class LoginController extends HttpServlet {
 			String newCustomerPassword = request.getParameter("password");
 			 if(newUserName != null &&  newCustomerEmailid != null && newCustomerPassword != null )
 				{
-				 System.out.println("GO INTO Register");
 					HttpSession session = request.getSession();
 					
 					UserDB.AddUser(newUserName, newCustomerEmailid, newCustomerPassword);
@@ -73,7 +73,7 @@ public class LoginController extends HttpServlet {
 					//List<DemoProductInfo> products = ProductDB.GetAllProducts();
 				
 					DemoUser user = UserDB.GetUserByEmailAndPassword(newCustomerEmailid, newCustomerPassword);
-					
+
 					try
 					{
 						loggedin = true;
@@ -103,6 +103,7 @@ public class LoginController extends HttpServlet {
 				String oldUserPassword = request.getParameter("password");
 				
 				List<DemoUser> user = UserDB.ValidateExistingUser(oldUserEmail, oldUserPassword); 
+				
 				System.out.println();
 				if(user != null)
 				{
@@ -111,7 +112,6 @@ public class LoginController extends HttpServlet {
 					String[] parsePreviousURL = request.getParameter("previousURL").split("/");
 					
 					String urlPath = parsePreviousURL[parsePreviousURL.length - 1];
-					System.out.println(urlPath);
 					
 					/*Checking for the previous page to redirect the user accordingly*/
 					

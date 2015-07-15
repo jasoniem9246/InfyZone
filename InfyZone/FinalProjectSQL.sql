@@ -21,6 +21,6 @@ where USER_ID = 1
 
 update DEMO_PRODUCT_INFO
 set PRODUCTIMAGEURL = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNEoggV9IST9JRx42osI5tBC_uWoi6oLYxvKl0yGRtv-w1m8yV'
-where PRODUCT_ID= 1;
+where PRODUCT_ID= 9;
 
 

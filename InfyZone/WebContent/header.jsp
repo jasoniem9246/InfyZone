@@ -102,7 +102,7 @@
 									<ul id="ddsubmenu1" class="ddsubmenustyle">
 										<li><a href="ViewCart">View Cart</a></li>
 										<li><a href="ShowOrderHistory">Order History</a></li>
-										<li><a href="#">Edit Profile</a></li>
+										<li><a href="/editprofile">Edit Profile</a></li>
 									</ul>
 								</li>   
 							</c:if>                 
@@ -114,14 +114,14 @@
 					<div class="navis"></div>                
 				</div>
 				<div class="col-md-4 col-sm-4" style="margin-top:20px;">
-				<form class="form-inline">
+				<form class="form-inline" action="MainController" method="get">
 						<select name="category" style="height: 31px">
 							<c:forEach items="${categories}" var="category">
 								<option value="${category}">${category}</option>
 							</c:forEach>
 						</select> 
-						<input   class="form-control" style="width:150px;" placeholder="Search..." name="search"/>
-						<button type="submit" name="action" value="search" class="btn btn-default">						
+						<input  class="form-control" style="width:150px;" placeholder="Search..." name="productName"/>
+						<button type="submit" name="action" value="search" class="btn btn-default" name="search">						
 						<span class="glyphicon glyphicon-star" aria-hidden="true">Go</span>
 						</button>
 				</form>

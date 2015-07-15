@@ -16,7 +16,11 @@ import java.util.List;
  */
 @Entity
 @Table(name="DEMO_ORDERS", schema="TESTUSER3")
-@NamedQuery(name="DemoOrder.findAll", query="SELECT d FROM DemoOrder d")
+@NamedQueries({
+	@NamedQuery(name="DemoOrder.findAll", query="SELECT d FROM DemoOrder d"),
+	@NamedQuery(name="DemoOrder.findOrderById", query="SELECT d FROM DemoOrder d where d.orderId = :orderId"),
+	@NamedQuery(name="DemoOrder.getMaxID", query="select max(d.orderId) from DemoOrder d")
+})
 public class DemoOrder implements Serializable {
 	private static final long serialVersionUID = 1L;
 

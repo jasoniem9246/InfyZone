@@ -28,6 +28,8 @@
           
          <div class="row">
             <!-- Item #1 -->
+         <c:choose>
+         <c:when test="${!empty products}">
             <c:forEach items="${products}" var="product">
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="item">
@@ -55,7 +57,14 @@
                 </div>
               </div>
             </div>      
-            </c:forEach>             
+            </c:forEach>
+         </c:when>
+         <c:otherwise>
+         <div class="col-md-12">
+         		<h1>Sorry! Product not found</h3>
+         </div>
+         </c:otherwise>    
+         </c:choose>         
           </div>
         </div>
       </div>
