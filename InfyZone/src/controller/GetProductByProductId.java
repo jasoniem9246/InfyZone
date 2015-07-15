@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.DemoProductInfo;
-
+import model.DemoProductInfo;
+import data.ProductDB;
 /**
  * Servlet implementation class GetProductByProductId
  */
@@ -42,65 +43,27 @@ public class GetProductByProductId extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String tableInfo = "";
-		String productId = request.getParameter("productId");
-		List<DemoProductInfo> productInfo = displayAllProductInfo(productId);
 		
-		try
+		String productId = request.getParameter("productID");
+		
+			if(! productId.equals(null))
 		{
-			
-			tableInfo += tableInfo += "<tr><th>Product Name</th><th>Product Description</th><th>Price</th></tr>";
-			for(int i = 0; i < productInfo.size(); i++)
+			List<DemoProductInfo> products = ProductDB.GetProductByProductId(productId);
+			//HttpSession session = request.getSession();
+			try
 			{
-				
-				tableInfo += "<tr><td>" + productInfo.get(i).getProductName()
-						+ "</th><th>" + "<a href='displayProductDetail?productId="
-						+ productInfo.get(i).getProductName() + "'>"
-						+ "</th><th>" + productInfo.get(i).getProductDescription()
-						+ "</th><th>" + productInfo.get(i).getListPrice()
-						+ "</td></tr>";
-				
+				request.setAttribute("product", products);
 			}
-			request.setAttribute("tableInfo", tableInfo);
+			catch(Exception e)
+			{
+				request.setAttribute("message", "<div class='alert alert-danger role='alert'>Error! Danger" + e + "</div>");
+			}
+			
+			getServletContext()
+			.getRequestDispatcher("/product_detail.jsp")
+			.forward(request, response);
 		}
-		catch(Exception e)
-		{
-			request.setAttribute("message", "<div class='alert alert-danger' role='alert'>Error Happens for GetProductByProductId servlet! " + e + "</div>");
-		}
-		
-		getServletContext()
-		.getRequestDispatcher("/displayProductDetails.jsp")
-		.forward(request, response);
 	}
 	
-	protected static List<DemoProductInfo> displayAllProductInfo(String productId)
-	{
-		
-		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
-		String qString = "SELECT d FROM DemoProductInfo d where o.productId = :productId";
-		TypedQuery<DemoProductInfo> q = em.createQuery(qString, DemoProductInfo.class);
-		q.setParameter("productId", (productId));
-		List<DemoProductInfo> i = null;
-		try
-		{
-		
-			i = q.getResultList();
-			if(i == null || i.isEmpty())
-			{
-				i = null;
-			}
-		}
-		catch(NoResultException e)
-		{
-			System.out.println(e);
-		}
-		
-		finally 
-		{
-			em.close();
-		}
-		
-		return i;
 
-	}
 }

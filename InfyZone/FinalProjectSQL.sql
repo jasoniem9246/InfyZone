@@ -12,5 +12,9 @@ ADD productImageURL VARCHAR2(400)
 
 
 
+update DEMO_USERS
+set USER_EMAIL = 'infy@gmail.com' and
+password = '123456'
+where USER_ID = 1
 
 

@@ -41,6 +41,7 @@
                                     <div class="input-group">
                                        <form method="post" action="ShoppingCart">
                                        <input type="text" class="form-control" name="quantity" placeholder="2">
+                                       <input type="hidden" name="productId" value="${productId}"/>
                                        <span class="input-group-btn">
                                          <button class="btn btn-info" type="submit" >Go!</button>
                                        </span>
