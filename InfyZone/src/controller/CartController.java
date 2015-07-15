@@ -61,7 +61,11 @@ public class CartController {
 	
 		DemoProductInfo prod = ProductDB.GetSingleProductByProductId(productID);
 		
-		//save order item
+		if(quantity == null )//save order item
+		{
+			quantity = "0";
+			
+		}
 		BigDecimal bd = new BigDecimal(quantity);
 		DemoOrderItem orderItem = new DemoOrderItem();
 		//orderItem.setDiscountAmount(new BigDecimal(0));
