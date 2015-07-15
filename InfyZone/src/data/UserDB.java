@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import model.DemoUser;
 
 public class UserDB {
-	protected static  List<DemoUser> ValidateExistingUser(String oldUserEmail, String oldUserPassword)
+	public static  List<DemoUser> ValidateExistingUser(String oldUserEmail, String oldUserPassword)
 	{
 		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
 		String qString = "Select u from DemoUser u where u.userEmail = :oldUserEmail and u.password = :oldUserPassword";
