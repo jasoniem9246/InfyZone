@@ -87,6 +87,7 @@ public class LoginController extends HttpServlet {
 						
 						session.setAttribute("loggedin", loggedin);
 						session.setAttribute("user", user);
+						session.setAttribute("cust", cust);
 					}
 					catch(Exception e)
 					{

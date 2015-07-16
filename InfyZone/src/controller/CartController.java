@@ -6,6 +6,7 @@ import java.util.List;
 
 import data.OrderDB;
 import data.ProductDB;
+import model.DemoCustomer;
 import model.DemoOrder;
 import model.DemoOrderItem;
 import model.DemoProductInfo;
@@ -34,7 +35,7 @@ public class CartController {
 	}
 	
 	
-	public static DemoOrder createOrder(DemoUser user, String productID, String quantity) {
+	public static DemoOrder createOrder(DemoUser user, DemoCustomer cust, String productID, String quantity) {
 		System.out.println("id: " + productID);
 		DemoProductInfo prod = ProductDB.GetSingleProductByProductId(productID);
 		if(quantity == null)
@@ -51,11 +52,16 @@ public class CartController {
 
 		//save order 
 		DemoOrder order = new DemoOrder();
-		orderItem.setDemoOrder(order);
 		order.setDemoUser(user);
 		List<DemoOrderItem> orderItems = new LinkedList<DemoOrderItem>();
 		orderItems.add(orderItem);
+		orderItem.setDemoOrder(order);
 		order.setDemoOrderItems(orderItems);
+		
+		List<DemoOrder> orders = cust.getDemoOrders();		
+		orders.add(order);
+		cust.setDemoOrders(orders);
+		order.setDemoCustomer(cust);
 		
 		return order;
 	}

@@ -25,8 +25,8 @@ public class DemoOrder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="DEMO_ORDERS_ORDERID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_ORDERS_ORDERID_GENERATOR")
+	//@SequenceGenerator(name="DEMO_ORDERS_ORDERID_GENERATOR" )
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ORDER_ID", unique=true, nullable=false)
 	private long orderId;
 

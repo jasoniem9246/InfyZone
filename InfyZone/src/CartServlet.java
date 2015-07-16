@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import controller.CartController;
 import data.OrderDB;
 import data.ProductDB;
+import model.DemoCustomer;
 import model.DemoOrder;
 import model.DemoOrderItem;
 import model.DemoProductInfo;
@@ -53,6 +54,7 @@ public class CartServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		double total = 0.0;
 		DemoUser user = (DemoUser) session.getAttribute("user");
+		DemoCustomer cust = (DemoCustomer) session.getAttribute("cust");
 		String productID = request.getParameter("productID");
 		String quantity = request.getParameter("quantity");
 		String action = request.getParameter("action");
@@ -61,7 +63,7 @@ public class CartServlet extends HttpServlet {
 			DemoOrder order = (DemoOrder) session.getAttribute("order");
 			if(order == null) {
 				System.out.println("Creating Order...");
-				order = CartController.createOrder(user, productID, quantity);
+				order = CartController.createOrder(user, cust, productID, quantity);
 			} else if(action != null && action.equals("update")) {
 				System.out.println("Updating Order...");
 				System.out.println("Quantity: " + quantity);

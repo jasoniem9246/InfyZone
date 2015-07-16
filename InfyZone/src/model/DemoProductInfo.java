@@ -25,8 +25,8 @@ public class DemoProductInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="DEMO_PRODUCT_INFO_PRODUCTID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_PRODUCT_INFO_PRODUCTID_GENERATOR")
+	//@SequenceGenerator(name="DEMO_PRODUCT_INFO_PRODUCTID_GENERATOR" )
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="PRODUCT_ID", unique=true, nullable=false)
 	private long productId;
 

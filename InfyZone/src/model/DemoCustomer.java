@@ -66,7 +66,7 @@ public class DemoCustomer implements Serializable {
 	private DemoUser demoUser;
 
 	//bi-directional many-to-one association to DemoOrder
-	@OneToMany(mappedBy="demoCustomer")
+	@OneToMany(mappedBy="demoCustomer", cascade = CascadeType.PERSIST)
 	private List<DemoOrder> demoOrders = new LinkedList<DemoOrder>();
 
 	public DemoCustomer() {
