@@ -72,23 +72,25 @@ public class CartServlet extends HttpServlet {
 			} else if(action != null && action.equals("checkout")) {
 				//get total order
 				System.out.println("Checking out....");
-				total = getOrderTotal(order);
+				order = setOrderTotal(order);
 				order.setOrderTotal(new BigDecimal(total));
 				order.setOrderTimestamp(new Date());
 				System.out.println("Total: " + total);
 				OrderDB.addOrder(order);
-				
-				
+				session.removeAttribute("order");			
 				getServletContext()
 				.getRequestDispatcher("/confirmation.jsp")
 				.forward(request, response);
-			
-		    } else {
+				return;
+		    } else if(action != null && action.equals("view")) {
+		    	//do nothing
+		    }
+			else {
 				System.out.println("Inserting new product");
 				order = CartController.setProductIntoOrder(order, productID, quantity);
 			}
 			
-			total = getOrderTotal(order);
+			order = setOrderTotal(order);
 			session.setAttribute("orderTotal", total);
 			session.setAttribute("order", order);
 			
@@ -100,13 +102,16 @@ public class CartServlet extends HttpServlet {
 		}
 	}
 	
-	public double getOrderTotal(DemoOrder order) {
+	public DemoOrder setOrderTotal(DemoOrder order) {
 		List<DemoOrderItem> items = order.getDemoOrderItems();
 		double total = 0.0;
 		for(DemoOrderItem item: items) {
 			total += item.getUnitPrice().doubleValue() * item.getQuantity().doubleValue();
 		}
-		return total;
+		
+		order.setOrderTotal(new BigDecimal(total));
+		
+		return order;
 	}
 
 }
