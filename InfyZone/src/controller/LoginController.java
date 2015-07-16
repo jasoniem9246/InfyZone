@@ -110,11 +110,20 @@ public class LoginController extends HttpServlet {
 				String oldUserPassword = request.getParameter("password");
 				
 				List<DemoUser> users = UserDB.ValidateExistingUser(oldUserEmail, oldUserPassword); 
-				DemoUser user = users.get(0);
+				DemoUser user = null;
 				
+				// Checking the list returned is null
+				if(users == null)
+				{
+					 user = null;
+				}
+				else
+				{
+					user = users.get(0);
+				}
+			
 				
-	
-				if(user != null)
+				if(user != null )
 				{
 					HttpSession session = request.getSession();
 					DemoCustomer cust = UserDB.GetCustomerByUserID(user.getUserId());
