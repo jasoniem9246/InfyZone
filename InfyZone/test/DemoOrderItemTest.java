@@ -148,32 +148,22 @@ public class DemoOrderItemTest {
 	@Test
 	public void testGetDemoOrder() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		DemoOrderItem orderitem = (DemoOrderItem) em.createNamedQuery("DemoOrderItem.findOrderItemById").setParameter("orderItemId", (long)1).getSingleResult();
-		assertNotNull(orderitem.getDemoOrder());
+		DemoOrderItem orderitem = (DemoOrderItem) em.createNamedQuery("DemoOrderItem.findOrderItemById").setParameter("orderItemId", (long)15).getSingleResult();
+		assertEquals(orderitem.getDemoOrder().getOrderId(), 3);
 	}
 
 	@Test
 	public void testSetDemoOrder() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-	    EntityTransaction trans = em.getTransaction();
-
+	    
 		try {
-					BigDecimal bd1 = new BigDecimal(5000);
-					BigDecimal bd2 = new BigDecimal(100);
+				
+					long maxID = (Long) em.createNamedQuery("DemoOrder.getMaxID").getSingleResult() + 1l;
 					DemoOrder order = new DemoOrder();
-					DemoProductInfo product = new DemoProductInfo();
+					order.setOrderId(maxID);
 					DemoOrderItem orderitem = new DemoOrderItem();
-					long maxID = (Long) em.createNamedQuery("DemoOrderItem.getMaxID").getSingleResult() + 1l;
-					orderitem.setOrderItemId(maxID);
 					orderitem.setDemoOrder(order);
-					orderitem.setDemoProductInfo(product);
-					orderitem.setUnitPrice(bd1);
-					orderitem.setQuantity(bd2);
-					trans.begin();
-					em.persist(orderitem);
-					trans.commit();
-					DemoOrderItem dborder = (DemoOrderItem) em.createNamedQuery("DemoOrderItem.findOrderItemById").setParameter("orderItemId", maxID).getSingleResult();
-					assertNotNull(dborder.getDemoOrder());
+					assertEquals(orderitem.getDemoOrder().getOrderId(),maxID);
 			
 		}
 		catch(Exception e)
@@ -183,20 +173,37 @@ public class DemoOrderItemTest {
 		} finally
 		{
 			em.close();
-			
 		}
 	}
-
+	
 	@Test
 	public void testGetDemoProductInfo() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		DemoOrderItem orderitem = (DemoOrderItem) em.createNamedQuery("DemoOrderItem.findOrderItemById").setParameter("orderItemId", (long)1).getSingleResult();
-		assertNotNull(orderitem.getDemoProductInfo());
+		DemoOrderItem orderitem = (DemoOrderItem) em.createNamedQuery("DemoOrderItem.findOrderItemById").setParameter("orderItemId", (long)15).getSingleResult();
+		assertEquals(orderitem.getDemoProductInfo().getProductId(), 5);
 	}
 
 	@Test
 	public void testSetDemoProductInfo() {
-		fail("Not yet implemented");
+			EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		    
+			try {
+					
+						long maxID = (Long) em.createNamedQuery("DemoProductInfo.getMaxID").getSingleResult() + 1l;
+						DemoProductInfo product = new DemoProductInfo();
+						product.setProductId(maxID);
+						DemoOrderItem orderitem = new DemoOrderItem();
+						orderitem.setDemoProductInfo(product);
+						assertEquals(orderitem.getDemoProductInfo().getProductId(),maxID);
+				
+			}
+			catch(Exception e)
+			{
+				fail(e.getMessage());
+				fail("Not yet implemented");
+			} finally
+			{
+				em.close();
+			}
 	}
-
 }
