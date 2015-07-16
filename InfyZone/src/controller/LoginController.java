@@ -74,13 +74,17 @@ public class LoginController extends HttpServlet {
 					//List<DemoProductInfo> products = ProductDB.GetAllProducts();
 					
 					DemoCustomer cust = new DemoCustomer();
-					DemoUser user = UserDB.GetUserByEmailAndPassword(newCustomerEmailid, newCustomerPassword);
-					cust.setDemoUser(user);
+					//UserDB.AddUser(newUserName, newCustomerEmailid, newCustomerPassword);
+					DemoUser user = UserDB.GetUserByEmailAndPassword(newUserName, newCustomerPassword);
+			
+					cust.setCustFirstName(" ");
+					cust.setCustLastName(" ");
+				//	cust.setDemoUser(user);
 					UserDB.AddCustomer(cust);
 					try
 					{
 						loggedin = true;
-						//request.setAttribute("products", products);
+						
 						session.setAttribute("loggedin", loggedin);
 						session.setAttribute("user", user);
 					}
