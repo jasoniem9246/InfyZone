@@ -62,9 +62,9 @@ public class UserDB {
 			user.setQuota(new BigDecimal(20000));
 			user.setProducts("Y");
 			em.persist(user);
+			em.flush();
 			trans.commit();
-
-			
+			System.out.println("New user is created!");
 		}
 		catch(NoResultException e)
 		{
@@ -88,6 +88,7 @@ public class UserDB {
 		try
 		{
 			em.persist(cust);
+			em.flush();
 			trans.commit();
 			
 		}

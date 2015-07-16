@@ -11,6 +11,9 @@ ADD USER_ID NUMBER(22) CONSTRAINT user_id_fk references DEMO_USERS(USER_ID);
 ALTER TABLE DEMO_PRODUCT_INFO
 ADD productImageURL VARCHAR2(400)
 
+ALTER TABLE demo_order_items 
+MODIFY order_item_id number(22,0);
+
 
 -- Update Table
 update DEMO_USERS

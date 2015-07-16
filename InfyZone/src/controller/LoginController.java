@@ -67,6 +67,7 @@ public class LoginController extends HttpServlet {
 			String newCustomerPassword = request.getParameter("password");
 			 if(newUserName != null &&  newCustomerEmailid != null && newCustomerPassword != null )
 				{
+				 System.out.println("Registering...");
 					HttpSession session = request.getSession();
 					
 					UserDB.AddUser(newUserName, newCustomerEmailid, newCustomerPassword);
@@ -75,13 +76,13 @@ public class LoginController extends HttpServlet {
 					
 					DemoCustomer cust = new DemoCustomer();
 					//UserDB.AddUser(newUserName, newCustomerEmailid, newCustomerPassword);
-					DemoUser user = UserDB.GetUserByEmailAndPassword(newUserName, newCustomerPassword);
-			
+					DemoUser user = UserDB.GetUserByEmailAndPassword(newCustomerEmailid, newCustomerPassword);
+					System.out.println("User ID: " + user.getUserId());
 					cust.setCustFirstName(" ");
 					cust.setCustLastName(" ");
 					cust.setDemoUser(user);
-					
 					UserDB.AddCustomer(cust);
+					cust = UserDB.GetCustomerByUserID(user.getUserId());
 					try
 					{
 						loggedin = true;

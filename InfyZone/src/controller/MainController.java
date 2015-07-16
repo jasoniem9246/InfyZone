@@ -80,7 +80,11 @@ public class MainController extends HttpServlet {
 				}
 
 			} else {
+				if (category.equals("All")) {
+					products = data.ProductDB.GetAllProducts();
+				} else {
 				products = ProductDB.GetProductByProductCategory(category);
+				}
 			}
 			
 			request.setAttribute("products", products);

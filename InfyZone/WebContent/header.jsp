@@ -70,9 +70,9 @@
            </div>
            
            <div class="modal-footer">
-           <form action="ShoppingController" method="post">
+           <form action="CartServlet" method="post">
              <button type="button" class="btn btn-default" data-dismiss="modal">Continue Shopping</button>
-             <button type="submit" class="btn btn-info" name="action" value="confirm">Checkout</button>
+             <button type="submit" class="btn btn-info" name="action" value="checkout">Checkout</button>
            </form>
            </div>
          </div><!-- /.modal-content -->

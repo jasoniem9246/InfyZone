@@ -72,6 +72,18 @@ public class CartServlet extends HttpServlet {
 			} else if(action != null && action.equals("checkout")) {
 				//get total order
 				System.out.println("Checking out....");
+				
+				//Check address is not empty
+				if(cust.getCustStreetAddress1() == null || cust.getCustStreetAddress1().equals("")) {
+					String message = "Please add address before checking out!";
+					request.setAttribute("message", message);
+					getServletContext()
+					.getRequestDispatcher("/editprofile.jsp")
+					.forward(request, response);
+					return;
+				}
+				
+				
 				order = setOrderTotal(order);
 				order.setOrderTotal(new BigDecimal(total));
 				order.setOrderTimestamp(new Date());

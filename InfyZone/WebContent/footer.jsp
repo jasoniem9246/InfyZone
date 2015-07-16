@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
       <!-- Footer starts -->
@@ -28,9 +29,9 @@
                            <h4>Categories</h4>
                            <hr />
                            <ul>
-                             <li><a href="#">Category 1</a></li>
-                             <li><a href="#">Category 2</a></li>
-                             <li><a href="#">Category 3</a></li>
+                           <c:forEach items="${categories}" var="category"> 
+                             <li><a href="MainController?category=${category}&action=search&productName=">${category}</a></li>
+                           </c:forEach>  
                            </ul>
                          </div>
                        </div>        
