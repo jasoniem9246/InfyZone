@@ -3,9 +3,9 @@
 	<persistence-unit name="InfyZone" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>model.DemoCustomer</class>
+		<class>model.DemoProductInfo</class>
 		<class>model.DemoOrder</class>
 		<class>model.DemoOrderItem</class>
-		<class>model.DemoProductInfo</class>
 		<class>model.DemoUser</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>

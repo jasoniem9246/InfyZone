@@ -38,8 +38,13 @@ public class CartController {
 	public static DemoOrder createOrder(DemoUser user, DemoCustomer cust, String productID, String quantity) {
 		System.out.println("id: " + productID);
 		System.out.println("user:" + user.getUserId());
+
 		System.out.println("cust:" + cust.getCustCity());
 		System.out.println("quantity:" + quantity);
+
+	// System.out.println("cust:" + cust.getCustCity());
+	//	System.out.println("quantity:" + quantity);
+
 		DemoProductInfo prod = ProductDB.GetSingleProductByProductId(productID);
 		if(quantity == null)
 		{

@@ -44,10 +44,10 @@
 										<td>${index.count}</td>
 										<!-- Product  name -->
 										<td><a
-											href="GetProductByProductID?productId=${item.demoProductInfo.productId}">${item.demoProductInfo.productName}</a></td>
+											href="GetProductByProductId?productID=${item.demoProductInfo.productId}">${item.demoProductInfo.productName}</a></td>
 										<!-- Product image -->
 										<td><a
-											href="GetProductByProductID?productId=${item.demoProductInfo.productId}">
+											href="GetProductByProductId?productID=${item.demoProductInfo.productId}">
 												<img src="${item.demoProductInfo.productimageurl}" alt=""
 												class="img-responsive" />
 										</a></td>

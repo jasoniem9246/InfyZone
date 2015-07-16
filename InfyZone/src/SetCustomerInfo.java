@@ -42,7 +42,11 @@ public class SetCustomerInfo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
 		System.out.println("Hello WOrld");
+
+		HttpSession session = request.getSession();
+
 		String firstName = request.getParameter("firstname");
 		String lastName = request.getParameter("lastname");
 		String phoneNumber_1 = request.getParameter("phone1");
@@ -56,7 +60,7 @@ public class SetCustomerInfo extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		HttpSession session = request.getSession();
+	//	HttpSession session = request.getSession();
 		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
 		
@@ -67,6 +71,7 @@ public class SetCustomerInfo extends HttpServlet {
 			DemoCustomer cust= new DemoCustomer();
 			DemoUser user = (DemoUser) session.getAttribute("user");
 			/*Setting the Customer Information coming in from EDIT PROFILE*/
+
 		
 			if(user != null)	
 			{
@@ -94,6 +99,35 @@ public class SetCustomerInfo extends HttpServlet {
 				
 				trans.commit();
 			}
+
+			if(user != null)
+			{
+				cust.setCustFirstName(firstName);
+				cust.setCustLastName(lastName);
+				cust.setCustStreetAddress1(addressLine_1);
+				cust.setCustStreetAddress2(addressLine_2);
+				cust.setPhoneNumber1(phoneNumber_1);
+				cust.setPhoneNumber2(phoneNumber_2);
+				cust.setCustCity(city);
+				cust.setCustState(state);
+				cust.setCustPostalCode(zipCode);
+				
+				/*setting the username, UserEmail, UserPassword in DemoUser first and then passing the object in DemoCustomer*/
+				user.setUserName(userName);
+				user.setUserEmail(email);
+				user.setPassword(password);
+				List<DemoCustomer> custs = user.getDemoCustomers();
+				custs.add(cust);
+				user.setDemoCustomers(custs);
+				cust.setDemoUser(user);
+				
+				em.persist(cust);
+				em.persist(user);
+				
+				trans.commit();
+			}
+				
+
 		}
 		catch(Exception e)
 		{
