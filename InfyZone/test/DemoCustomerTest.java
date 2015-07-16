@@ -485,14 +485,12 @@ public class DemoCustomerTest {
 		}
 	}
 
-<<<<<<< HEAD
 
 
 
-	/*	@Test
-=======
+
 	@Test
->>>>>>> branch 'master' of https://github.com/diyangqiu/InfyZone
+
 	public void testSetDemoUser() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 	    
