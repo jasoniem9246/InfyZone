@@ -489,8 +489,12 @@ public class DemoCustomerTest {
 
 
 
-	@Test
 
+
+
+
+	@Test
+	
 	public void testSetDemoUser() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 	    
