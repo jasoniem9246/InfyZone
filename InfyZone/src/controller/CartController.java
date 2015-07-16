@@ -37,6 +37,14 @@ public class CartController {
 	
 	public static DemoOrder createOrder(DemoUser user, DemoCustomer cust, String productID, String quantity) {
 		System.out.println("id: " + productID);
+		System.out.println("user:" + user.getUserId());
+
+		System.out.println("cust:" + cust.getCustCity());
+		System.out.println("quantity:" + quantity);
+
+	// System.out.println("cust:" + cust.getCustCity());
+	//	System.out.println("quantity:" + quantity);
+
 		DemoProductInfo prod = ProductDB.GetSingleProductByProductId(productID);
 		if(quantity == null)
 		{
@@ -47,27 +55,22 @@ public class CartController {
 		//orderItem.setDiscountAmount(new BigDecimal(0));
 		
 		orderItem.setUnitPrice(prod.getListPrice());
-		System.out.println(prod.getProductName());
 		orderItem.setDemoProductInfo(prod);
 		orderItem.setQuantity(bd);
-		
 
 		//save order 
 		DemoOrder order = new DemoOrder();
 		order.setDemoUser(user);
-		
 		List<DemoOrderItem> orderItems = new LinkedList<DemoOrderItem>();
-		//bi-direction
-		orderItem.setDemoOrder(order);
 		orderItems.add(orderItem);
+		orderItem.setDemoOrder(order);
 		order.setDemoOrderItems(orderItems);
 		
-		System.out.println("cust id: " + cust.getCustomerId());
-//		List<DemoOrder> orders = cust.getDemoOrders();		
-//		orders.add(order);
-//		cust.setDemoOrders(orders);
+		List<DemoOrder> orders = cust.getDemoOrders();		
+		orders.add(order);
+		cust.setDemoOrders(orders);
 		order.setDemoCustomer(cust);
-		orderItem.setDemoOrder(order);
+		
 		return order;
 	}
 	
@@ -89,6 +92,7 @@ public class CartController {
 
 		
 		order.setDemoOrderItems(orderItems);
+		
 		return order;
 	}
 	

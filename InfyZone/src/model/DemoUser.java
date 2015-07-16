@@ -19,7 +19,9 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="DemoUser.findAll", query="SELECT d FROM DemoUser d"),
 	@NamedQuery(name="DemoUser.findUserById", query="SELECT d FROM DemoUser d where d.userId = :userId"),
-	@NamedQuery(name="DemoUser.getMaxID", query="select max(d.userId) from DemoUser d")	
+	@NamedQuery(name="DemoUser.getMaxID", query="select max(d.userId) from DemoUser d")	,
+	@NamedQuery(name="DemoUser.findUserByPassword", query="SELECT d FROM DemoUser d where d.password = :password"),
+	@NamedQuery(name="DemoUser.findUserByEmail", query="SELECT d FROM DemoUser d where d.userEmail = :userEmail")
 })
 public class DemoUser implements Serializable {
 	private static final long serialVersionUID = 1L;

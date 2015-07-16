@@ -1,12 +1,9 @@
 
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,11 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import controller.CartController;
 import data.OrderDB;
-import data.ProductDB;
 import model.DemoCustomer;
 import model.DemoOrder;
 import model.DemoOrderItem;
-import model.DemoProductInfo;
 import model.DemoUser;
 
 /**
@@ -71,8 +66,7 @@ public class CartServlet extends HttpServlet {
 				order = CartController.updateOrder(order, productID, quantity);
 			} else if(action != null && action.equals("checkout")) {
 				//get total order
-				System.out.println("Checking out....");
-				
+				System.out.println("Checking out....");		
 				//Check address is not empty
 				if(cust.getCustStreetAddress1() == null || cust.getCustStreetAddress1().equals("")) {
 					String message = "Please add address before checking out!";
@@ -83,27 +77,23 @@ public class CartServlet extends HttpServlet {
 					return;
 				}
 				
-				
+			
 				order = setOrderTotal(order);
-				order.setOrderTotal(new BigDecimal(total));
 				order.setOrderTimestamp(new Date());
 				System.out.println("Total: " + total);
 				OrderDB.addOrder(order);
-				session.removeAttribute("order");			
+				
+				
 				getServletContext()
 				.getRequestDispatcher("/confirmation.jsp")
 				.forward(request, response);
-				return;
-		    } else if(action != null && action.equals("view")) {
-		    	//do nothing
-		    }
-			else {
+			
+		    } else {
 				System.out.println("Inserting new product");
 				order = CartController.setProductIntoOrder(order, productID, quantity);
 			}
 			
 			order = setOrderTotal(order);
-			session.setAttribute("orderTotal", total);
 			session.setAttribute("order", order);
 			
 			getServletContext()
@@ -120,9 +110,7 @@ public class CartServlet extends HttpServlet {
 		for(DemoOrderItem item: items) {
 			total += item.getUnitPrice().doubleValue() * item.getQuantity().doubleValue();
 		}
-		
 		order.setOrderTotal(new BigDecimal(total));
-		
 		return order;
 	}
 

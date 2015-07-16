@@ -146,8 +146,8 @@ public class DemoUserTest {
 	@Test
 	public void testGetPassword() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		DemoUser user = (DemoUser) em.createQuery("Select d from DemoUser d where d.password = :password ").setParameter("password", "C96C19BE1416C025AD1D0AF567C1BBE2").getSingleResult();
-		assertEquals("C96C19BE1416C025AD1D0AF567C1BBE2",user.getPassword());
+		DemoUser user = (DemoUser) em.createQuery("Select d from DemoUser d where d.password = :password ").setParameter("password", "123456").getSingleResult();
+		assertEquals("123456",user.getPassword());
 		
 	}
 
@@ -193,7 +193,8 @@ public class DemoUserTest {
 	@Test
 	public void testGetUserName() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		DemoUser user = (DemoUser) em.createQuery("Select d from DemoUser d where d.userName = :userName ").setParameter("userName", "ADMIN").getSingleResult();
+		List<DemoUser> users = (List<DemoUser>) em.createQuery("Select d from DemoUser d where d.userName = :userName ").setParameter("userName", "ADMIN").getResultList();
+		DemoUser user = users.get(0);
 		assertEquals("ADMIN",user.getUserName());
 	}
 

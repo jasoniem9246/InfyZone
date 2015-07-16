@@ -170,7 +170,7 @@
                <div class="col-md-9">
                   <h3><i class="fa fa-user color"></i> &nbsp;Edit Profile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-info" onclick="getLocation()">Where am I ?</button></h3>  
                   <!-- Your details -->
-                  <form class="form-horizontal" role="form">
+                  <form class="form-horizontal" role="form" method="post" action="SetCustomerInfo">
                     <div class="form-group">
                       <label for="firstname" class="col-md-2 control-label">First Name</label>
                       <div class="col-md-4">
@@ -255,7 +255,7 @@
                     <hr />
                     <div class="form-group">
                       <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-danger">Save Changes</button>
+                        <button type="submit" class="btn btn-danger" >Save Changes</button>
                         <button type="reset" class="btn btn-default">Reset</button>
                       </div>
                     </div>
