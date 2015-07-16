@@ -56,15 +56,15 @@
                 </tr>
             </thead>
             <tbody>
-<%-- 			<c:if test="${!empty order}">
-			<c:forEach items="order.demoOrderItems" var="orderItem">
+			<c:if test="${!empty order}">
+			<c:forEach items="${order.demoOrderItems}" var="item">
 				<tr>
-                  <td><a href="ProductDetail?productID=${orderItem.demoProductInfo.productId}">${orderItem.demoProductInfo.productName}</a></td>
-                  <td>${orderItem.quantity}</td>
-                  <td>${orderItem.unitPrice}</td>
+                  <td><a href="GetProductByProductId?productID=${item.demoProductInfo.productId}">${item.demoProductInfo.productName}</a></td>
+                  <td>${item.quantity}</td>
+                  <td>${item.unitPrice}</td>
                 </tr>
 			</c:forEach>
-			</c:if>  --%>
+			</c:if> 
 			</tbody>
             </table>
            </div>
@@ -101,7 +101,9 @@
 							<c:if test="${!empty user}">
 								<li><a href="#" rel="ddsubmenu1">Account</a>
 									<ul id="ddsubmenu1" class="ddsubmenustyle">
-										<li><a href="CartServlet?action=view">View Cart</a></li>
+										<c:if test="${!empty order}">
+											<li><a href="CartServlet?action=view">View Cart</a></li>
+										</c:if>
 										<li><a href="ShowOrderHistory">Order History</a></li>
 										<li><a href="editprofile.jsp">Edit Profile</a></li>
 									</ul>
