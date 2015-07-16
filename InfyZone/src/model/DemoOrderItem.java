@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 
 
@@ -11,7 +13,11 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name="DEMO_ORDER_ITEMS", schema="TESTUSER3")
-@NamedQuery(name="DemoOrderItem.findAll", query="SELECT d FROM DemoOrderItem d")
+@NamedQueries({
+	@NamedQuery(name="DemoOrderItem.findAll", query="SELECT d FROM DemoOrderItem d"),
+	@NamedQuery(name="DemoOrderItem.findOrderItemById", query="SELECT d FROM DemoOrderItem d where d.orderItemId = :orderItemId"),
+	@NamedQuery(name="DemoOrderItem.getMaxID", query="select max(d.orderItemId) from DemoOrderItem d")
+})
 public class DemoOrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -1,9 +1,12 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -13,7 +16,11 @@ import java.util.List;
  */
 @Entity
 @Table(name="DEMO_PRODUCT_INFO", schema="TESTUSER3")
-@NamedQuery(name="DemoProductInfo.findAll", query="SELECT d FROM DemoProductInfo d")
+@NamedQueries({
+	@NamedQuery(name="DemoProductInfo.findAll", query="SELECT d FROM DemoProductInfo d"),
+	@NamedQuery(name="DemoProductInfo.findProductById", query="SELECT d FROM DemoProductInfo d where d.productId = :productId"),
+	@NamedQuery(name="DemoProductInfo.getMaxID", query="select max(d.productId) from DemoProductInfo d")
+})
 public class DemoProductInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -52,12 +59,12 @@ public class DemoProductInfo implements Serializable {
 	@Column(name="PRODUCT_NAME", length=50)
 	private String productName;
 
-	@Column(name="PRODUCTIMAGEURL", length=400)
+	@Column(length=400)
 	private String productimageurl;
 
 	//bi-directional many-to-one association to DemoOrderItem
 	@OneToMany(mappedBy="demoProductInfo")
-	private List<DemoOrderItem> demoOrderItems;
+	private List<DemoOrderItem> demoOrderItems = new LinkedList<>();
 
 	public DemoProductInfo() {
 	}

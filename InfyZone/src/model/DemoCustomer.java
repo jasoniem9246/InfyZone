@@ -1,8 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -12,13 +15,18 @@ import java.util.List;
  */
 @Entity
 @Table(name="DEMO_CUSTOMERS", schema="TESTUSER3")
-@NamedQuery(name="DemoCustomer.findAll", query="SELECT d FROM DemoCustomer d")
+@NamedQueries({
+	@NamedQuery(name="DemoCustomer.findAll", query="SELECT d FROM DemoCustomer d"),
+	@NamedQuery(name="DemoCustomer.findCustomerById", query="SELECT d FROM DemoCustomer d where d.customerId = :customerId"),
+	@NamedQuery(name="DemoCustomer.getMaxID", query="select max(d.customerId) from DemoCustomer d")
+})
 public class DemoCustomer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR")
+	//@SequenceGenerator(name="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR" )
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="CUSTOMER_ID", unique=true, nullable=false)
 	private long customerId;
 
@@ -59,7 +67,7 @@ public class DemoCustomer implements Serializable {
 
 	//bi-directional many-to-one association to DemoOrder
 	@OneToMany(mappedBy="demoCustomer")
-	private List<DemoOrder> demoOrders;
+	private List<DemoOrder> demoOrders = new LinkedList<DemoOrder>();
 
 	public DemoCustomer() {
 	}

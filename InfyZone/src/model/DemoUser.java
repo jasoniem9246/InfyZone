@@ -1,9 +1,12 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -13,13 +16,18 @@ import java.util.List;
  */
 @Entity
 @Table(name="DEMO_USERS", schema="TESTUSER3")
-@NamedQuery(name="DemoUser.findAll", query="SELECT d FROM DemoUser d")
+@NamedQueries({
+	@NamedQuery(name="DemoUser.findAll", query="SELECT d FROM DemoUser d"),
+	@NamedQuery(name="DemoUser.findUserById", query="SELECT d FROM DemoUser d where d.userId = :userId"),
+	@NamedQuery(name="DemoUser.getMaxID", query="select max(d.userId) from DemoUser d")	
+})
 public class DemoUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="DEMO_USERS_USERID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_USERS_USERID_GENERATOR")
+//	@SequenceGenerator(name="DEMO_USERS_USERID_GENERATOR" )
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_USERS_USERID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="USER_ID", unique=true, nullable=false)
 	private long userId;
 
@@ -51,11 +59,11 @@ public class DemoUser implements Serializable {
 
 	//bi-directional many-to-one association to DemoCustomer
 	@OneToMany(mappedBy="demoUser")
-	private List<DemoCustomer> demoCustomers;
+	private List<DemoCustomer> demoCustomers = new LinkedList<DemoCustomer>();
 
 	//bi-directional many-to-one association to DemoOrder
 	@OneToMany(mappedBy="demoUser")
-	private List<DemoOrder> demoOrders;
+	private List<DemoOrder> demoOrders =  new LinkedList<DemoOrder>();
 
 	public DemoUser() {
 	}

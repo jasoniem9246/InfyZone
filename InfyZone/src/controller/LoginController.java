@@ -74,13 +74,17 @@ public class LoginController extends HttpServlet {
 					//List<DemoProductInfo> products = ProductDB.GetAllProducts();
 					
 					DemoCustomer cust = new DemoCustomer();
-					DemoUser user = UserDB.GetUserByEmailAndPassword(newCustomerEmailid, newCustomerPassword);
-					cust.setDemoUser(user);
+					//UserDB.AddUser(newUserName, newCustomerEmailid, newCustomerPassword);
+					DemoUser user = UserDB.GetUserByEmailAndPassword(newUserName, newCustomerPassword);
+			
+					cust.setCustFirstName(" ");
+					cust.setCustLastName(" ");
+				//	cust.setDemoUser(user);
 					UserDB.AddCustomer(cust);
 					try
 					{
 						loggedin = true;
-						//request.setAttribute("products", products);
+						
 						session.setAttribute("loggedin", loggedin);
 						session.setAttribute("user", user);
 					}
@@ -106,11 +110,20 @@ public class LoginController extends HttpServlet {
 				String oldUserPassword = request.getParameter("password");
 				
 				List<DemoUser> users = UserDB.ValidateExistingUser(oldUserEmail, oldUserPassword); 
-				DemoUser user = users.get(0);
+				DemoUser user = null;
 				
+				// Checking the list returned is null
+				if(users == null)
+				{
+					 user = null;
+				}
+				else
+				{
+					user = users.get(0);
+				}
+			
 				
-	
-				if(user != null)
+				if(user != null )
 				{
 					HttpSession session = request.getSession();
 					DemoCustomer cust = UserDB.GetCustomerByUserID(user.getUserId());
