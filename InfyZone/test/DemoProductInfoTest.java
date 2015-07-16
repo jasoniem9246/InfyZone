@@ -475,6 +475,7 @@ public class DemoProductInfoTest {
 	public void testSetDemoOrderItems() {
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 	    EntityTransaction trans = em.getTransaction();
+	    LinkedList orderItems = new LinkedList<DemoOrderItem>();
 
 		try {
 					BigDecimal bd = new BigDecimal(5000);
@@ -490,11 +491,12 @@ public class DemoProductInfoTest {
 					product.setMimetype(null);
 					product.setFilename(null);
 					product.setImageLastUpdate(null);
+					product.setDemoOrderItems(orderItems);
 					trans.begin();
 					em.persist(product);
 					trans.commit();
 					DemoProductInfo dbproduct = (DemoProductInfo) em.createNamedQuery("DemoProductInfo.findProductById").setParameter("productId", maxID).getSingleResult();
-					assertNotNull(dbproduct.getDemoOrderItems());
+					assertEquals(dbproduct.getDemoOrderItems().size(), 0);
 			
 		}
 		catch(Exception e)

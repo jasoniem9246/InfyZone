@@ -1,10 +1,14 @@
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import model.DemoCustomer;
+import model.DemoOrder;
+import model.DemoOrderItem;
 import model.DemoProductInfo;
 import model.DemoUser;
 import mytools.DBUtil;
@@ -481,21 +485,113 @@ public class DemoCustomerTest {
 		}
 	}
 
+<<<<<<< HEAD
 
 
 
 	/*	@Test
+=======
+	@Test
+>>>>>>> branch 'master' of https://github.com/diyangqiu/InfyZone
 	public void testSetDemoUser() {
-		fail("Not yet implemented");
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+	    
+		try {
+				
+					long maxID = (Long) em.createNamedQuery("DemoUser.getMaxID").getSingleResult() + 1l;
+					DemoUser user = new DemoUser();
+					user.setUserId(maxID);
+					DemoCustomer cust = new DemoCustomer();
+					cust.setDemoUser(user);
+					assertEquals(cust.getDemoUser().getUserId(), maxID);
+			
+		}
+		catch(Exception e)
+		{
+			fail(e.getMessage());
+			fail("Not yet implemented");
+		} finally
+		{
+			em.close();
+		}
+
 	}
-*/
+
 	@Test
 	public void testGetDemoOrders() {
+				EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		
+				try {
+					
+					DemoCustomer cust = (DemoCustomer) em.createNamedQuery("DemoCustomer.findCustomerById").setParameter("customerId",(long)1).getSingleResult();
+					assertNotNull(cust.getDemoOrders());
+					
+					
+				}
+				catch(Exception e)
+				{
+					fail(e.getMessage());
+					fail("Not yet implemented");
+				} finally
+				{
+					em.close();
+				}
+	}
+
+	@Test
+	public void testSetDemoOrders() {
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+	    EntityTransaction trans = em.getTransaction();
+	    LinkedList orders = new LinkedList<DemoOrderItem>();
+
+		try {
+					BigDecimal bd = new BigDecimal(5000);
+					DemoCustomer cust = new DemoCustomer();
+					DemoOrder order = new DemoOrder();
+					long maxID = (Long) em.createNamedQuery("DemoCustomer.getMaxID").getSingleResult() + 1l;
+					cust.setCustomerId(maxID);
+					cust.setCustFirstName("Bill");
+					cust.setCustLastName("Gates");
+					cust.setCustStreetAddress1(null);
+					cust.setCustStreetAddress2(null);
+					cust.setCustCity("Seattle");
+					cust.setCustState("WA");
+					cust.setCustPostalCode("12345");
+					cust.setPhoneNumber1(null);
+					cust.setPhoneNumber2(null);
+					cust.setCreditLimit(bd);
+					cust.setDemoUser(null);
+					cust.setDemoOrders(orders);					
+					trans.begin();
+					em.persist(cust);
+					trans.commit();
+					DemoCustomer dbcust = (DemoCustomer) em.createNamedQuery("DemoCustomer.findCustomerById").setParameter("customerId", maxID).getSingleResult();
+					assertEquals(dbcust.getDemoOrders().size(), 0);
+			
+		}
+		catch(Exception e)
+		{
+			fail(e.getMessage());
+			fail("Not yet implemented");
+		} finally
+		{
+			em.close();
+			
+		}
+	}
+
+	@Test
+	public void testAddDemoOrder() {
+		
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
 		try {
+
 			
-			DemoCustomer cust = (DemoCustomer) em.createNamedQuery("DemoCustomer.findCustomerById").setParameter("customerId",(long)1).getSingleResult();
+			DemoCustomer cust = new DemoCustomer();
+			DemoOrder order = new DemoOrder();
+			order = em.find(DemoOrder.class, (long)1);
+			cust.addDemoOrder(order);
 			assertNotNull(cust.getDemoOrders());
 			
 			
@@ -507,22 +603,32 @@ public class DemoCustomerTest {
 		} finally
 		{
 			em.close();
+			
 		}
-	}
-
-/*	@Test
-	public void testSetDemoOrders() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAddDemoOrder() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testRemoveDemoOrder() {
-		fail("Not yet implemented");
-	}*/
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+
+		try {
+			DemoCustomer cust = new DemoCustomer();
+			DemoOrder order = new DemoOrder();
+			cust.addDemoOrder(order);;
+			cust.removeDemoOrder(order);
+			assertEquals(cust.getDemoOrders().size(), 0);
+			
+			
+		}
+		catch(Exception e)
+		{
+			fail(e.getMessage());
+			fail("Not yet implemented");
+		} finally
+		{
+			em.close();
+			
+		}
+	}
 
 }
