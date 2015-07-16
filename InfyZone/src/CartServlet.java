@@ -1,5 +1,4 @@
 
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -72,25 +71,23 @@ public class CartServlet extends HttpServlet {
 			} else if(action != null && action.equals("checkout")) {
 				//get total order
 				System.out.println("Checking out....");
-				order = setOrderTotal(order);
+				total = getOrderTotal(order);
 				order.setOrderTotal(new BigDecimal(total));
 				order.setOrderTimestamp(new Date());
 				System.out.println("Total: " + total);
 				OrderDB.addOrder(order);
-				session.removeAttribute("order");			
+				
+				
 				getServletContext()
 				.getRequestDispatcher("/confirmation.jsp")
 				.forward(request, response);
-				return;
-		    } else if(action != null && action.equals("view")) {
-		    	//do nothing
-		    }
-			else {
+			
+		    } else {
 				System.out.println("Inserting new product");
 				order = CartController.setProductIntoOrder(order, productID, quantity);
 			}
 			
-			order = setOrderTotal(order);
+			total = getOrderTotal(order);
 			session.setAttribute("orderTotal", total);
 			session.setAttribute("order", order);
 			
@@ -102,16 +99,13 @@ public class CartServlet extends HttpServlet {
 		}
 	}
 	
-	public DemoOrder setOrderTotal(DemoOrder order) {
+	public double getOrderTotal(DemoOrder order) {
 		List<DemoOrderItem> items = order.getDemoOrderItems();
 		double total = 0.0;
 		for(DemoOrderItem item: items) {
 			total += item.getUnitPrice().doubleValue() * item.getQuantity().doubleValue();
 		}
-		
-		order.setOrderTotal(new BigDecimal(total));
-		
-		return order;
+		return total;
 	}
 
 }
