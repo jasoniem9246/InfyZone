@@ -23,7 +23,7 @@
                         <div class="col-md-4 col-xs-5">
 
                           <div class="item-image">
-                              <img src="${product.productimageurl}" alt="" />
+                              <img src="${product.productimageurl}" alt="" style="width:1px; height:1px"/>
                           </div>
                               
 

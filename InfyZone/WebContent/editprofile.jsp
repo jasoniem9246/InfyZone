@@ -254,7 +254,7 @@
                     <hr />
                     <div class="form-group">
                       <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-danger">Save Changes</button>
+                        <button type="submit" class="btn btn-danger" >Save Changes</button>
                         <button type="reset" class="btn btn-default">Reset</button>
                       </div>
                     </div>
