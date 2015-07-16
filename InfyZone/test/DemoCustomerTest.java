@@ -464,8 +464,9 @@ public class DemoCustomerTest {
 
 		try {
 			
-			DemoCustomer cust = (DemoCustomer) em.createNamedQuery("DemoCustomer.findCustomerById").setParameter("customerId",(long)1).getSingleResult();
+			DemoCustomer cust = (DemoCustomer) em.createNamedQuery("DemoCustomer.findCustomerById").setParameter("customerId",1L).getSingleResult();
 			assertNotNull(cust.getDemoUser());
+			
 			
 			
 		}
@@ -480,7 +481,10 @@ public class DemoCustomerTest {
 		}
 	}
 
-/*	@Test
+
+
+
+	/*	@Test
 	public void testSetDemoUser() {
 		fail("Not yet implemented");
 	}
