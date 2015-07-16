@@ -24,8 +24,9 @@ public class DemoCustomer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR")
+	//@SequenceGenerator(name="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR" )
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEMO_CUSTOMERS_CUSTOMERID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="CUSTOMER_ID", unique=true, nullable=false)
 	private long customerId;
 
