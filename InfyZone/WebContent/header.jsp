@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -55,7 +56,7 @@
                 </tr>
             </thead>
             <tbody>
-<%--             <c:if test="${!empty user}">
+<%-- 			<c:if test="${!empty order}">
 			<c:forEach items="order.demoOrderItems" var="orderItem">
 				<tr>
                   <td><a href="ProductDetail?productID=${orderItem.demoProductInfo.productId}">${orderItem.demoProductInfo.productName}</a></td>
@@ -63,7 +64,7 @@
                   <td>${orderItem.unitPrice}</td>
                 </tr>
 			</c:forEach>
-			</c:if> --%>
+			</c:if>  --%>
 			</tbody>
             </table>
            </div>
@@ -100,13 +101,13 @@
 							<c:if test="${!empty user}">
 								<li><a href="#" rel="ddsubmenu1">Account</a>
 									<ul id="ddsubmenu1" class="ddsubmenustyle">
-										<li><a href="ViewCart">View Cart</a></li>
+										<li><a href="CartServlet?action=view">View Cart</a></li>
 										<li><a href="ShowOrderHistory">Order History</a></li>
 										<li><a href="editprofile.jsp">Edit Profile</a></li>
 									</ul>
 								</li>   
 							</c:if>                 
-								<li><a href="contactus.html">Contact</a></li>
+								<li><a href="contactus.jsp">Contact</a></li>
 							</ul>
 						</div>
 					</div>
@@ -133,14 +134,14 @@
 							<c:when test="${empty user}">
 								<a href="login.jsp">Login</a>
 								<a href="register.jsp">Signup</a>
-								<a data-toggle="modal" href="#shoppingcart"><i
-									class="fa fa-shopping-cart"></i> <c:if
-										test="${!empty order.demoOrderItems}">
-                     	${fn:length(order.demoOrderItems)} - ${order.orderTotal}
-                     			</c:if></a>
 							</c:when>
 							<c:otherwise>
 								<a href="LoginController?action=logout">Logout</a>
+								<a data-toggle="modal" href="#shoppingcart"><i
+									class="fa fa-shopping-cart"></i> 				
+									<c:if test="${!empty order}">  
+                     					${fn:length(order.demoOrderItems)} - <fmt:formatNumber value="${order.orderTotal}" type="currency"/>
+                     			</c:if></a>
 							</c:otherwise>
 						</c:choose>
 					</div>

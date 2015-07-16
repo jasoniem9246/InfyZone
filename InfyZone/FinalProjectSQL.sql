@@ -24,3 +24,7 @@ set PRODUCTIMAGEURL = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNE
 where PRODUCT_ID= 9;
 
 
+update demo_customers
+set user_id = 1
+where customer_id = 1
+

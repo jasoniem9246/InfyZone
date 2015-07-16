@@ -79,7 +79,8 @@ public class LoginController extends HttpServlet {
 			
 					cust.setCustFirstName(" ");
 					cust.setCustLastName(" ");
-				//	cust.setDemoUser(user);
+					cust.setDemoUser(user);
+					
 					UserDB.AddCustomer(cust);
 					try
 					{
