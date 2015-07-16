@@ -10,7 +10,7 @@
       <!-- Page title -->
       <div class="page-title">
          <div class="container">
-            <h2><i class="fa fa-desktop color"></i> View Cart <small>Order Number: </small></h2>
+            <h2><i class="fa fa-desktop color"></i> View Cart </h2>
             <hr />
          </div>
       </div>
@@ -38,10 +38,10 @@
                       <tbody>
 						<c:choose>
 							<c:when test="${!empty order}">
-								<c:forEach items="${order.demoOrderItems}" var="item">
+								<c:forEach items="${order.demoOrderItems}" var="item" varStatus="index">
 									<tr>
 										<!-- Index -->
-										<td>1</td>
+										<td>${index.count}</td>
 										<!-- Product  name -->
 										<td><a
 											href="GetProductByProductID?productId=${item.demoProductInfo.productId}">${item.demoProductInfo.productName}</a></td>
@@ -54,11 +54,11 @@
 										<!-- Quantity with refresh and remove button -->
 										<td>
 											<div class="input-group">
-												<form action="CartServlet" method="post" style="width: 120px;">
-													<input type="text" class="form-control" name="quantity" value="${item.quantity}"
-														style="width: 60px;"> <span
-														class="input-group-btn" style="float: right;">
-														<button class="btn btn-info" type="submit" name="update">
+												<form action="CartServlet" method="post" style="width:120px;">
+													<input type="text" class="form-control" name="quantity" value="${item.quantity}" style="width: 60px;"> 
+													<input type="hidden" name="productID" value="${item.demoProductInfo.productId}">
+													<span class="input-group-btn" style="float: right;">
+														<button class="btn btn-info" type="submit" name="action" value="update">
 															<i class="fa fa-refresh"></i>
 														</button>
 														<button class="btn btn-danger" type="submit" name="delete">
@@ -92,8 +92,10 @@
                     <div class="row">
                       <div class="span4 offset8">
                         <div class="pull-right">
-                          <a href="index.html" class="btn btn-info">Continue Shopping</a>
-                          <a href="Confirm" class="btn btn-danger">CheckOut</a>
+                        <form action="CartServlet" method="post">
+                        	<a href="MainController" class="btn btn-info">Continue Shopping</a>
+                        	<button class="btn btn-danger" type="submit" name="action" value="checkout">CheckOut</button> 
+                        </form>
                         </div>
                       </div>
                     </div>

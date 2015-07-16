@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
+import data.OrderDB;
 import data.ProductDB;
 import model.DemoOrder;
 import model.DemoOrderItem;
@@ -43,12 +44,14 @@ public class CartController {
 		BigDecimal bd = new BigDecimal(quantity);
 		DemoOrderItem orderItem = new DemoOrderItem();
 		//orderItem.setDiscountAmount(new BigDecimal(0));
+		
 		orderItem.setUnitPrice(prod.getListPrice());
 		orderItem.setDemoProductInfo(prod);
 		orderItem.setQuantity(bd);
-		
+
 		//save order 
 		DemoOrder order = new DemoOrder();
+		orderItem.setDemoOrder(order);
 		order.setDemoUser(user);
 		List<DemoOrderItem> orderItems = new LinkedList<DemoOrderItem>();
 		orderItems.add(orderItem);
@@ -62,30 +65,39 @@ public class CartController {
 		{
 			quantity = "1";
 		}
-		
 		DemoProductInfo prod = ProductDB.GetSingleProductByProductId(productID);
-		//update existing product quantity
 		List<DemoOrderItem> orderItems = order.getDemoOrderItems();
-		boolean isUpdate = false;
 		BigDecimal bd = new BigDecimal(quantity);
-		for(DemoOrderItem orderItem : orderItems) {
-			if(orderItem.getDemoProductInfo().getProductId() == prod.getProductId()) {
-				orderItem.setQuantity(bd);
-				isUpdate = true;
-				break;
-			}
-		}
 		//stored new product
-		if(!isUpdate) {
-			DemoOrderItem orderItem = new DemoOrderItem();
-			orderItem.setUnitPrice(prod.getListPrice());
-			orderItem.setDemoProductInfo(prod);
-			orderItem.setQuantity(bd);	
-			orderItems.add(orderItem);
-		}
+		DemoOrderItem orderItem = new DemoOrderItem();
+		orderItem.setUnitPrice(prod.getListPrice());
+		orderItem.setDemoProductInfo(prod);
+		orderItem.setQuantity(bd);	
+		orderItem.setDemoOrder(order);
+		orderItems.add(orderItem);
+
 		
 		order.setDemoOrderItems(orderItems);
 		
 		return order;
 	}
+	
+	public static DemoOrder updateOrder(DemoOrder order, String productID, String quantity) {
+		if(quantity == null)
+		{
+			quantity = "1";
+		}
+		DemoProductInfo prod = ProductDB.GetSingleProductByProductId(productID);
+		List<DemoOrderItem> orderItems = order.getDemoOrderItems();
+		BigDecimal bd = new BigDecimal(quantity);
+		for(DemoOrderItem orderItem : orderItems) {
+			if(orderItem.getDemoProductInfo().getProductId() == prod.getProductId()) {
+				orderItem.setQuantity(bd);
+				break;
+			}
+		}
+		order.setDemoOrderItems(orderItems);
+		return order;
+	}
+	
 }
