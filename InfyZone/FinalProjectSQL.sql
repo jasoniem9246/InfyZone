@@ -42,8 +42,8 @@ SET PRODUCTIMAGEURL = 'http://www.bestpassportwallet.com/wp-content/uploads/2011
 WHERE PRODUCT_NAME = 'Wallet';
 
 UPDATE DEMO_PRODUCT_INFO
-SET PRODUCTIMAGEURL = 'http://i.ebayimg.com/00/s/NjUwWDY1MA==/$(KGrHqZHJBwE8+7+)4k,BPVoFcjEfg~~60_35.JPGWHERE'
-PRODUCT_NAME = 'Business Shirt';
+SET PRODUCTIMAGEURL = 'http://i.ebayimg.com/00/s/NjUwWDY1MA==/$(KGrHqZHJBwE8+7+)4k,BPVoFcjEfg~~60_35.JPG' 
+WHERE PRODUCT_NAME = 'Business Shirt';
 
 UPDATE DEMO_PRODUCT_INFO
 SET PRODUCTIMAGEURL = 'http://g04.a.alicdn.com/kf/HTB1Ra7EHVXXXXceXFXXq6xXFXXXa/Free-shipping-2015-new-arrival-slim-font-b-suit-b-font-pants-men-formal-wear-business.jpg'
