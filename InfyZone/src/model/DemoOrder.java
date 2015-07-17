@@ -26,7 +26,7 @@ public class DemoOrder implements Serializable {
 
 	@Id
 	//@SequenceGenerator(name="DEMO_ORDERS_ORDERID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ORDER_ID", unique=true, nullable=false)
 	private long orderId;
 

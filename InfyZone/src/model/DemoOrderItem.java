@@ -23,7 +23,7 @@ public class DemoOrderItem implements Serializable {
 
 	@Id
 	//@SequenceGenerator(name="DEMO_ORDER_ITEMS_ORDERITEMID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ORDER_ITEM_ID", unique=true, nullable=false, precision=10)
 	private long orderItemId;
 

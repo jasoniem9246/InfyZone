@@ -47,7 +47,6 @@ public class CartServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		double total = 0.0;
 		DemoUser user = (DemoUser) session.getAttribute("user");
 		DemoCustomer cust = (DemoCustomer) session.getAttribute("cust");
 		String productID = request.getParameter("productID");
@@ -64,7 +63,7 @@ public class CartServlet extends HttpServlet {
 				System.out.println("Quantity: " + quantity);
 				System.out.println("Product ID: " + productID);
 				order = CartController.updateOrder(order, productID, quantity);
-			} else if(action != null && action.equals("checkout")) {
+			} else if(action != null && action.equals("checkout") && order.getDemoOrderItems().size() != 0) {
 				//get total order
 				System.out.println("Checking out....");		
 				//Check address is not empty
@@ -80,16 +79,24 @@ public class CartServlet extends HttpServlet {
 			
 				order = setOrderTotal(order);
 				order.setOrderTimestamp(new Date());
-				System.out.println("Total: " + total);
 				OrderDB.addOrder(order);
-				
-				
+				session.removeAttribute("order");
 				getServletContext()
 				.getRequestDispatcher("/confirmation.jsp")
-				.forward(request, response);
-			
-		    } else {
-				System.out.println("Inserting new product");
+				.forward(request, response);	
+				return;
+		    } else if (action != null && action.equals("view")) {
+		    	//do nothing
+		    } else if (action != null && action.equals("delete")) {
+		    	List<DemoOrderItem> items = order.getDemoOrderItems();
+		    	for(DemoOrderItem item: items) {
+		    		if(item.getDemoProductInfo().getProductId() == Long.parseLong(productID)) {
+		    			items.remove(item);
+		    			break;
+		    		}
+		    	}
+		    	order.setDemoOrderItems(items);
+			} else { System.out.println("Inserting new product");
 				order = CartController.setProductIntoOrder(order, productID, quantity);
 			}
 			

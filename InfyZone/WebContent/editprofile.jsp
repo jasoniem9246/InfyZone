@@ -174,31 +174,31 @@
                     <div class="form-group">
                       <label for="firstname" class="col-md-2 control-label">First Name</label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Firstname">
+                        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Firstname" value="${cust.custFirstName}">
                       </div>
                     </div>   
                     <div class="form-group">
                       <label for="lastname" class="col-md-2 control-label">Last Name</label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Lastname">
+                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Lastname" value="${cust.custLastName}">
                       </div>
                     </div>         
                     <div class="form-group">
                       <label for="phone1" class="col-md-2 control-label">Phone 1</label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" id="phone1" name="phone1" placeholder="Phone 1">
+                        <input type="text" class="form-control" id="phone1" name="phone1" placeholder="Phone 1" value="${cust.phoneNumber1}" >
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="phone2" class="col-md-2 control-label">Phone 2</label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" id="phone2" name="phone2" placeholder="Phone 2">
+                        <input type="text" class="form-control" id="phone2" name="phone2" placeholder="Phone 2" value="${cust.phoneNumber2}">
                       </div>
                     </div>      
                     <div class="form-group">
                         <label for="address1" class="col-md-2 control-label">Address 1</label>
                         <div class="col-md-4">
-                           <textarea class="form-control" rows="3" id="address1" name="address1" placeholder="Address 1"></textarea>
+                           <textarea class="form-control" rows="3" id="address1" name="address1" placeholder="Address 1">${cust.custStreetAddress1}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -210,19 +210,19 @@
                     <div class="form-group">
                       <label for="city" class="col-md-2 control-label">City</label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" id="city" name="city" placeholder="City">
+                        <input type="text" class="form-control" id="city" name="city" placeholder="City" value="${cust.custCity}">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="state" class="col-md-2 control-label">State</label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" id="state" name="state" placeholder="State">
+                        <input type="text" class="form-control" id="state" name="state" placeholder="State" value="${cust.custState}">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="zipCode" class="col-md-2 control-label">Zip Code</label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Zip Code">
+                        <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Zip Code" value="${cust.custPostalCode}">
                       </div>
                     </div>
                     <div class="form-group">

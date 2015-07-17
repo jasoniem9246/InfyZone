@@ -66,6 +66,7 @@ public class CartController {
 		orderItem.setDemoOrder(order);
 		order.setDemoOrderItems(orderItems);
 		
+		//cust bi-direction
 		List<DemoOrder> orders = cust.getDemoOrders();		
 		orders.add(order);
 		cust.setDemoOrders(orders);

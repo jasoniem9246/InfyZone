@@ -43,7 +43,6 @@ public class SetCustomerInfo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		System.out.println("Hello WOrld");
 
 		HttpSession session = request.getSession();
 
@@ -68,7 +67,7 @@ public class SetCustomerInfo extends HttpServlet {
 		
 		try
 		{
-			DemoCustomer cust= new DemoCustomer();
+			DemoCustomer cust= (DemoCustomer) session.getAttribute("cust");
 			DemoUser user = (DemoUser) session.getAttribute("user");
 			/*Setting the Customer Information coming in from EDIT PROFILE*/
 
@@ -94,50 +93,25 @@ public class SetCustomerInfo extends HttpServlet {
 				user.setDemoCustomers(custs);
 				cust.setDemoUser(user);
 		
-				em.persist(cust);
-				em.persist(em.merge(user));
+				em.persist(em.merge(cust));
+				//em.persist(em.merge(user));
+				em.flush();
 				
 				trans.commit();
-			}
-
-			if(user != null)
-			{
-				cust.setCustFirstName(firstName);
-				cust.setCustLastName(lastName);
-				cust.setCustStreetAddress1(addressLine_1);
-				cust.setCustStreetAddress2(addressLine_2);
-				cust.setPhoneNumber1(phoneNumber_1);
-				cust.setPhoneNumber2(phoneNumber_2);
-				cust.setCustCity(city);
-				cust.setCustState(state);
-				cust.setCustPostalCode(zipCode);
-				
-				/*setting the username, UserEmail, UserPassword in DemoUser first and then passing the object in DemoCustomer*/
-				user.setUserName(userName);
-				user.setUserEmail(email);
-				user.setPassword(password);
-				List<DemoCustomer> custs = user.getDemoCustomers();
-				custs.add(cust);
-				user.setDemoCustomers(custs);
-				cust.setDemoUser(user);
-				
-				em.persist(cust);
-				em.persist(user);
-				
-				trans.commit();
-			}
-				
-
+			}			
+			
+			System.out.println("Hello WOrld");
+			
 		}
 		catch(Exception e)
 		{
-			System.out.println();
+			System.out.println(e);
 		}
 		finally
 		{
 			em.close();
 		}
-		
-		getServletContext().getRequestDispatcher("/MainController").forward(request, response);
+		//getServletContext().getRequestDispatcher("/MainController").forward(request, response);
+		response.sendRedirect("editprofile.jsp");
 	}
 }

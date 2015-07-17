@@ -61,7 +61,7 @@
 														<button class="btn btn-info" type="submit" name="action" value="update">
 															<i class="fa fa-refresh"></i>
 														</button>
-														<button class="btn btn-danger" type="submit" name="delete">
+														<button class="btn btn-danger" type="submit" name="action" value="delete">
 															<i class="fa fa-times"></i>
 														</button>
 													</span>
