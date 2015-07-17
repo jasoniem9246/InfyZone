@@ -14,7 +14,7 @@
                
                   <!-- Breadcrumb -->
                  <ul class="breadcrumb">
-                   <li><a href="index.html">Home</a> <span class="divider"></span></li>
+                   <li><a href="MainController">Home</a> <span class="divider"></span></li>
                    <li class="active">${product.productName}</li>
                  </ul>
                
@@ -23,7 +23,7 @@
                         <div class="col-md-4 col-xs-5">
 
                           <div class="item-image">
-                              <img src="${product.productimageurl}" alt="" style="width:1px; height:1px"/>
+                              <img src="${product.productimageurl}" alt=""/>
                           </div>
                               
 

@@ -11,6 +11,7 @@
       <div class="page-title">
          <div class="container">
             <h2><i class="fa fa-desktop color"></i> View Cart </h2>
+            <c:if test="${message}"><h2>${message}</h2></c:if>
             <hr />
          </div>
       </div>
@@ -55,7 +56,7 @@
 										<td>
 											<div class="input-group">
 												<form action="CartServlet" method="post" style="width:120px;">
-													<input type="text" class="form-control" name="quantity" value="${item.quantity}" style="width: 60px;"> 
+													<input type="number"  class="form-control" name="quantity" value="${item.quantity}" style="width: 60px;"> 
 													<input type="hidden" name="productID" value="${item.demoProductInfo.productId}">
 													<span class="input-group-btn" style="float: right;">
 														<button class="btn btn-info" type="submit" name="action" value="update">
@@ -82,6 +83,14 @@
 								<h3>Cart is empty</h3>
 							</c:otherwise>
 						</c:choose>
+						<tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th>Total</th>
+                          <th><fmt:formatNumber value="${order.orderTotal}" type="currency"/></th>
+                        </tr>
 
 					</tbody>
                     </table>

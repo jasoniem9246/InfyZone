@@ -9,7 +9,8 @@
             <h2><i class="fa fa-shopping-cart color"></i> We received payment Successfully...</h2>
             <hr />
             <h5>Thanks for buying from InfyZone!!!</h5>
-            <h5>Your Order #id is <span class="color">43454354</span>. Use this for further communication.</h5>
+            <h5>Your <a href="ShowOrderHistory">Order</a> is confirmed. Use this for further communication.</h5>
+
             <div class="sep-bor"></div>
             <form class="form-inline" role="form">
               <div class="form-group">

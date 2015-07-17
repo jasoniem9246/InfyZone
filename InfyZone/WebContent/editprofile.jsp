@@ -162,7 +162,7 @@
                   <div class="sidey">
                      <ul class="nav">
                          <li><a href="#">My Account</a></li>
-                         <li><a href="order_history.jsp">Order History</a></li>                         
+                         <li><a href="ShowOrderHistory">Order History</a></li>                         
                          <li><a href="editprofile.jsp">Edit Profile</a></li>
                      </ul>
                   </div>

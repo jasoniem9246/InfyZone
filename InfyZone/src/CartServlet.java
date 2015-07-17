@@ -51,6 +51,19 @@ public class CartServlet extends HttpServlet {
 		DemoCustomer cust = (DemoCustomer) session.getAttribute("cust");
 		String productID = request.getParameter("productID");
 		String quantity = request.getParameter("quantity");
+		if (quantity != null) {
+			try {
+				Integer.parseInt(quantity);
+			} catch (NumberFormatException e) {
+				String message = "Please enter a valid number";
+				request.setAttribute("message", message);
+				System.out.println(message);
+				getServletContext().getRequestDispatcher("/shopping_cart.jsp")
+						.forward(request, response);
+				return;
+			}
+		}
+		
 		String action = request.getParameter("action");
 		//check user login
 		if(user != null) {
