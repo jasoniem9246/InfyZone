@@ -43,7 +43,7 @@
                                        <input type="text" class="form-control" name="quantity" placeholder="2">
                                        <input type="hidden" name="productID" value="${product.productId}"/>  
                                        <span class="input-group-btn">
-                                         <button class="btn btn-info" type="submit">Go!</button>
+                                         <button class="btn btn-info" type="submit" name="action" value="add">Go!</button>
                                        </span>
                                        </form>
                                      </div><!-- /input-group -->

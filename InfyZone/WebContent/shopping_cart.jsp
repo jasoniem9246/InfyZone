@@ -102,7 +102,7 @@
                       <div class="span4 offset8">
                         <div class="pull-right">
                         <form action="CartServlet" method="post">
-                        	<a href="MainController" class="btn btn-info">Continue Shopping</a>
+                        	<a href="${preURL}" class="btn btn-info">Continue Shopping</a>
                         	<button class="btn btn-danger" type="submit" name="action" value="checkout">CheckOut</button> 
                         </form>
                         </div>

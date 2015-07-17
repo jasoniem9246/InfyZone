@@ -51,6 +51,10 @@ public class CartServlet extends HttpServlet {
 		DemoCustomer cust = (DemoCustomer) session.getAttribute("cust");
 		String productID = request.getParameter("productID");
 		String quantity = request.getParameter("quantity");
+		String[] parsePreviousURL = request.getHeader("referer").split("/"); 
+		String previousURL = parsePreviousURL[parsePreviousURL.length-1];
+		
+		
 		if (quantity != null) {
 			try {
 				Integer.parseInt(quantity);
@@ -98,6 +102,7 @@ public class CartServlet extends HttpServlet {
 				order.setOrderTimestamp(new Date());
 				OrderDB.addOrder(order);
 				session.removeAttribute("order");
+							
 				getServletContext()
 				.getRequestDispatcher("/confirmation.jsp")
 				.forward(request, response);	
@@ -113,7 +118,7 @@ public class CartServlet extends HttpServlet {
 		    		}
 		    	}
 		    	order.setDemoOrderItems(items);
-			} else { 
+			} else if (action != null && action.equals("add") && !isProudctNotInOrder(order, productID)) { 
 				System.out.println("Inserting new product");
 				order = CartController.setProductIntoOrder(order, productID, quantity);
 			}
@@ -121,12 +126,26 @@ public class CartServlet extends HttpServlet {
 			order = setOrderTotal(order);
 			session.setAttribute("order", order);
 			
+			request.setAttribute("preURL", previousURL);
+			System.out.println(previousURL);
+			
 			getServletContext()
 			.getRequestDispatcher("/shopping_cart.jsp")
 			.forward(request, response);
 		} else {
 			response.sendRedirect("login.jsp");
 		}
+	}
+	
+	public boolean isProudctNotInOrder(DemoOrder order, String productID) {
+		boolean found = false;
+		List<DemoOrderItem> items = order.getDemoOrderItems();
+		for(DemoOrderItem item:items) {
+			if(item.getDemoProductInfo().getProductId() == Long.parseLong(productID)) {
+				found = true;
+			}
+		}
+		return found;
 	}
 	
 	public DemoOrder setOrderTotal(DemoOrder order) {
