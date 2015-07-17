@@ -63,7 +63,11 @@ public class CartServlet extends HttpServlet {
 				System.out.println("Quantity: " + quantity);
 				System.out.println("Product ID: " + productID);
 				order = CartController.updateOrder(order, productID, quantity);
-			} else if(action != null && action.equals("checkout") && order.getDemoOrderItems().size() != 0) {
+			} else if(action != null && action.equals("checkout")) {
+				if(order.getDemoOrderItems().size() == 0) {
+					response.sendRedirect("login.jsp");
+					return;
+				}
 				//get total order
 				System.out.println("Checking out....");		
 				//Check address is not empty

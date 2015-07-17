@@ -44,32 +44,25 @@ public class ShowOrderHistory extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
-		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		em.find(DemoUser.class,1l );
-		DemoUser  dbuser = em.find(DemoUser.class,1l);
-		
+		EntityManager em = mytools.DBUtil.getEmFactory().createEntityManager();
          HttpSession session = request.getSession();
-         session.setAttribute("user", dbuser);
-		 model.DemoUser user = (DemoUser) session.getAttribute("user");
-		 System.out.println("User:" + user.getUserId());
+         DemoUser user = (DemoUser) session.getAttribute("user");
+		 System.out.println("Order History - User:" + user.getUserId());
 
 		 if(user == null) {
 			 response.sendRedirect("/index.jsp");
 		} else {
-			Long adminuser = user.getUserId();
+			String adminuser = user.getAdminUser();
 			
 
-			if (adminuser.equals(1l)) {
+			if (adminuser.equals("Y")) {
 				@SuppressWarnings("unchecked")
 				List<DemoOrder> orders = em.createQuery(
 						"SELECT d FROM DemoOrder d").getResultList();
 				request.setAttribute("orders", orders);
 				request.getRequestDispatcher("/order_history.jsp").forward(
 						request, response);
-			} else if (adminuser.equals(2l)) {
+			} else if (adminuser.equals("N")) {
 								long id = user.getUserId();
 				@SuppressWarnings("unchecked")
 				List<DemoOrder> orders = (List<DemoOrder>) em.createQuery(
