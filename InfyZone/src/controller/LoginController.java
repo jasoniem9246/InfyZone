@@ -129,7 +129,7 @@ public class LoginController extends HttpServlet {
 				if(user != null )
 				{
 					HttpSession session = request.getSession();
-					DemoCustomer cust = UserDB.GetCustomerByUserID(user.getUserId());
+					DemoCustomer cust =UserDB.GetCustomerByUserID(user.getUserId());
 					String[] parsePreviousURL = request.getParameter("previousURL").split("/");
 					
 					String urlPath = parsePreviousURL[parsePreviousURL.length - 1];

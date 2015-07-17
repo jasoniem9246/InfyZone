@@ -2,10 +2,8 @@
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,11 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import controller.CartController;
 import data.OrderDB;
-import data.ProductDB;
 import model.DemoCustomer;
 import model.DemoOrder;
 import model.DemoOrderItem;
-import model.DemoProductInfo;
 import model.DemoUser;
 
 /**
@@ -70,9 +66,19 @@ public class CartServlet extends HttpServlet {
 				order = CartController.updateOrder(order, productID, quantity);
 			} else if(action != null && action.equals("checkout")) {
 				//get total order
-				System.out.println("Checking out....");
-				total = getOrderTotal(order);
-				order.setOrderTotal(new BigDecimal(total));
+				System.out.println("Checking out....");		
+				//Check address is not empty
+				if(cust.getCustStreetAddress1() == null || cust.getCustStreetAddress1().equals("")) {
+					String message = "Please add address before checking out!";
+					request.setAttribute("message", message);
+					getServletContext()
+					.getRequestDispatcher("/editprofile.jsp")
+					.forward(request, response);
+					return;
+				}
+				
+			
+				order = setOrderTotal(order);
 				order.setOrderTimestamp(new Date());
 				System.out.println("Total: " + total);
 				OrderDB.addOrder(order);
@@ -87,8 +93,7 @@ public class CartServlet extends HttpServlet {
 				order = CartController.setProductIntoOrder(order, productID, quantity);
 			}
 			
-			total = getOrderTotal(order);
-			session.setAttribute("orderTotal", total);
+			order = setOrderTotal(order);
 			session.setAttribute("order", order);
 			
 			getServletContext()
@@ -99,13 +104,14 @@ public class CartServlet extends HttpServlet {
 		}
 	}
 	
-	public double getOrderTotal(DemoOrder order) {
+	public DemoOrder setOrderTotal(DemoOrder order) {
 		List<DemoOrderItem> items = order.getDemoOrderItems();
 		double total = 0.0;
 		for(DemoOrderItem item: items) {
 			total += item.getUnitPrice().doubleValue() * item.getQuantity().doubleValue();
 		}
-		return total;
+		order.setOrderTotal(new BigDecimal(total));
+		return order;
 	}
 
 }

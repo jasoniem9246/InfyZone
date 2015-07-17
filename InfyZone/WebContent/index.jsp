@@ -30,10 +30,13 @@
             <!-- Item #1 -->
          <c:choose>
          <c:when test="${!empty products}">
-            <c:forEach items="${products}" var="product">
+            <c:forEach items="${products}" var="product" varStatus="index">
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="item">
                 <!-- Use the below link to put HOT icon -->
+                <c:if test="">
+                
+                </c:if>
                 <div class="item-icon"><span>HOT</span></div>
                 <!-- Item image -->
                 <div class="item-image">

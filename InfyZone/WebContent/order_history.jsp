@@ -24,9 +24,9 @@
                <div class="col-md-3">
                   <div class="sidey">
                      <ul class="nav">
-                         <li><a href="account.html">My Account</a></li>
-                         <li><a href="orderhistory.html">Order History</a></li>                         
-                         <li><a href="editprofile.html">Edit Profile</a></li>
+                         <li><a href="#">My Account</a></li>
+                         <li><a href="order_history.jsp">Order History</a></li>                         
+                         <li><a href="editprofile.jsp">Edit Profile</a></li>
                      </ul>
                   </div>
                </div>
