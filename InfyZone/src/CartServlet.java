@@ -100,7 +100,8 @@ public class CartServlet extends HttpServlet {
 		    		}
 		    	}
 		    	order.setDemoOrderItems(items);
-			} else { System.out.println("Inserting new product");
+			} else { 
+				System.out.println("Inserting new product");
 				order = CartController.setProductIntoOrder(order, productID, quantity);
 			}
 			
